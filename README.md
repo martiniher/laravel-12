@@ -1,59 +1,181 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Fundamentos de Desarrollo Web: Frameworks y Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## ¿Qué es un Framework?
 
-## About Laravel
+Un **framework** (marco de trabajo) es una estructura de código predefinida y un conjunto de herramientas que proporcionan la estructura fundamental y las reglas para construir una aplicación.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ¿Para qué sirve?
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Su propósito principal es aumentar la **productividad** y la **estandarización** del desarrollo:
 
-## Learning Laravel
+* **Velocidad**: Evita que tengas que escribir código repetitivo (como la gestión de sesiones, rutas o la conexión a bases de datos) desde cero.
+* **Organización**: Impone un patrón de diseño (como **MVC - Modelo, Vista, Controlador**) que ayuda a mantener el código limpio y escalable.
+* **Seguridad**: Incluye mecanismos de seguridad ya probados contra ataques comunes (como **SQL Injection** o **XSS**).
+* **Comunidad**: Permite que varios desarrolladores trabajen en el mismo proyecto con una convención y un conjunto de herramientas compartidas.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ¿Qué diferencias tiene con una Librería?
 
-## Laravel Sponsors
+La principal diferencia radica en quién tiene el **control del flujo del programa**:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Característica | Framework | Librería |
+| :------------- | :--------------: | :------------- |
+| **Control del Flujo**| **Inversión de Control (IoC)**: El framework define la estructura y el ciclo de vida de la aplicación. | **Control del Desarrollador**: El código del desarrollador dirige el flujo de la aplicación. |
+| **Arquitectura** | Proporciona la estructura completa del proyecto (el esqueleto). | Proporciona funcionalidades específicas y auxiliares. |
+| **Alcance** | Se utiliza para construir **toda** la aplicación (ej. backend o frontend). | Se utiliza para una **tarea específica** (ej. manipular fechas, hacer peticiones HTTP).|
+| **Ejemplos** | Laravel, Symfony, Django, Angular. | jQuery, Lodash, Moment.js, Guzzle (en PHP). |
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## ¿Cuáles son los principales Frameworks de Desarrollo Web?
 
-## Contributing
+Los frameworks de desarrollo web se dividen principalmente en **Backend** (lógica del servidor) y **Frontend** (interfaz de usuario).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Frameworks de Backend (Servidor)
 
-## Code of Conduct
+Estos manejan la lógica, bases de datos y seguridad:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Lenguaje | Framework Principal | Énfasis / Característica Destacada |
+| :------- | :------------------ | :--------------------------------- |
+| PHP      | **Laravel** | Sintaxis elegante, excelente comunidad, desarrollo rápido (el más popular en PHP). |
+| PHP      | **Symfony** | Componentes reutilizables, robusto, alta calidad de código (base de muchos otros frameworks). |
+| Python   | **Django** | "Baterías incluidas" (todo lo que necesitas), enfoque en el desarrollo rápido y seguro. |
+| Python   | **Flask** | Micro-framework, minimalista y flexible, ideal para APIs simples. |
+| JavaScript| **Express.js** | Minimalista, flexible, rápido y utilizado con Node.js para APIs. |
+| Java     | **Spring Boot** | Líder en el desarrollo empresarial, facilita la creación de aplicaciones Java de forma rápida. |
+| Ruby     | **Ruby on Rails** | "Convención sobre Configuración", muy productivo y con enfoque en la elegancia del código. |
 
-## Security Vulnerabilities
+### Frameworks/Librerías de Frontend (Cliente)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Estos se centran en la interfaz de usuario, interactividad y la experiencia del usuario:
 
-## License
+| Lenguaje | Framework/Librería | Énfasis / Característica Destacada |
+| :------- | :----------------- | :--------------------------------- |
+| JavaScript| **React** | Librería mantenida por Meta. Foco en los **componentes reutilizables** y el DOM Virtual. |
+| TypeScript| **Angular** | Mantenido por Google. Framework completo y robusto para grandes aplicaciones empresariales. |
+| JavaScript| **Vue.js** | Progresivo y fácil de aprender. Combina lo mejor de React y Angular, muy flexible. |
+| JavaScript| **Next.js** | Framework Full-Stack (Frontend y Backend) construido sobre React. Excelente para **SEO** (Server-Side Rendering). |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## ¿Qué es Laravel?
+
+**Laravel** es un framework de desarrollo web de código abierto escrito en **PHP**. Fue creado por Taylor Otwell y lanzado por primera vez en 2011. Su objetivo principal es hacer que el desarrollo de aplicaciones web complejas sea más **rápido, fácil y agradable** para el desarrollador.
+
+Laravel sigue el patrón de diseño **Modelo-Vista-Controlador (MVC)**, lo que ayuda a organizar la aplicación de manera lógica y modular.
+
+### ¿Por qué usar Laravel?
+
+Laravel se ha convertido en el framework de PHP más utilizado debido a la forma en que simplifica tareas comunes y promueve la calidad del código:
+
+* **Sintaxis Elegante y Legible**: Su código está diseñado para ser expresivo y fácil de entender.
+* **Productividad Rápida ("Time-to-Market")**: Incluye herramientas integradas que eliminan el código repetitivo:
+    * **Eloquent ORM**: Abstracción de bases de datos que permite interactuar con la BD usando **Modelos** de PHP.
+    * **Artisan**: Una potente interfaz de línea de comandos (**CLI**) para generar código, manejar migraciones y ejecutar tareas.
+* **Seguridad Integrada**: Proporciona protección automática contra ataques comunes (CSRF, Inyección SQL, XSS).
+* **Ecosistema y Comunidad**: Cuenta con un ecosistema robusto (Forge, Vapor, Nova) y una comunidad muy activa.
+
+En resumen, Laravel proporciona el equilibrio perfecto entre simplicidad, funcionalidad y estándares para construir aplicaciones web modernas, escalables y seguras.
+
+---
+
+## ¿Qué es Composer?
+
+**Composer** no es un gestor de paquetes tradicional, sino un **gestor de dependencias**. Esto significa que:
+
+1.  **Define Dependencias**: Lee el archivo `composer.json` (donde listas qué librerías necesitas).
+2.  **Resuelve Dependencias**: Averigua qué otras librerías requiere cada una (**dependencias transitivas**).
+3.  **Descarga Librerías**: Descarga los paquetes del repositorio `Packagist.org` y los coloca en la carpeta `vendor/`.
+4.  **Autocarga (Autoloading)**: Genera el archivo `vendor/autoload.php` que cumple con el estándar **PSR-4**, haciendo que todas las clases estén disponibles automáticamente en tu código.
+
+### ¿Por qué es esencial en Laravel?
+
+* **Instalación del Framework**: Laravel en sí mismo es un conjunto de paquetes de Composer.
+* **Gestión de Dependencias**: Laravel depende de docenas de componentes de terceros (muchos de Symfony) que Composer gestiona.
+* **Facilita el Desarrollo**: Permite añadir rápidamente funcionalidades (como autenticación o depuración) listándolas en `composer.json`.
+* **Estándares PSR**: Implementa los estándares de autocarga **PSR-4**, manteniendo el código organizado y estandarizado.
+
+---
+
+## ¿Qué son los estándares PSR?
+
+Los estándares **PSR** (**PHP Standards Recommendation**) son un conjunto de directrices propuestas por el grupo PHP-FIG. Su objetivo es asegurar la **interoperabilidad** entre diferentes frameworks y librerías de PHP, facilitando que el código sea consistente y reutilizable.
+
+Laravel sigue un conjunto estricto de convenciones de nomenclatura basadas en PSR y el patrón **MVC** (Modelo-Vista-Controlador).
+
+### Convenciones de Nomenclatura en Laravel
+
+#### 1. Clases (Modelos, Controladores, Servicios)
+
+Las clases siguen la convención **PascalCase** (o UpperCamelCase):
+
+* **Modelos**: Singular y PascalCase (Ejemplo: `User`, `Product`).
+* **Controladores**: PascalCase, generalmente terminan en `Controller` (Ejemplo: `UserController`, `OrderController`).
+
+#### 2. Funciones y Métodos
+
+Los métodos y funciones siguen la convención **camelCase**:
+
+* **Métodos del Controlador**: Describen la acción (Ejemplo: `index()`, `store()`, `update()`).
+* **Métodos de Relación en Modelos**: `camelCase` singular o plural según la relación (Ejemplo: `post()`, `tags()`).
+
+#### 3. Archivos y Directorios
+
+Laravel organiza los archivos según el estándar **PSR-4**:
+
+* **Archivos de Clases**: El nombre del archivo debe coincidir exactamente con el nombre de la clase (Ejemplo: `ProductController.php`).
+* **Vistas (Views)**: Utilizan **snake_case** y terminan en `.blade.php` (Ejemplo: `user_profile.blade.php`).
+
+#### 4. Base de Datos (Tablas y Columnas)
+
+Laravel tiene fuertes convenciones predeterminadas:
+
+* **Nombres de Tablas**: **snake_case** y **plural** (Ejemplo: `users`, `products`).
+* **Nombres de Modelos**: La forma **singular** y **PascalCase** del nombre de la tabla (Ejemplo: tabla `users` usa el modelo `User`).
+* **Claves Foráneas (Foreign Keys)**: Nombre del modelo singular en `snake_case` seguido de `_id` (Ejemplo: `user_id`).
+
+---
+
+## Laravel, ¿Por dónde empezar?
+
+El framework implementa el patrón de diseño **MVC (Modelo-Vista-Controlador)** de la siguiente manera:
+
+### Estructura de Archivos (Ejemplo Simplificado)
+
+
+
+Ya sabemos qué es el patrón de diseño MVC (Modelo-Vista-Controlador). Ahora vamos a ver cómo los desarrolladores de Laravel lo han implementado y cómo vamos a tener que adaptar nuestra aplicación al framework.
+Como punto de partida vamos a adaptar un ejemplo visto con anterioridad (mvc-php-ejemplo). La estructura de archivos es muy similar aunque con algunas diferencias:
+laravel-app/
+├── app/                           # Lógica central (Modelos, Controladores, etc.)
+│   ├── Http/                      # Controladores, Middleware, Peticiones (Requests)
+│   │   ├── Controllers/           # Controladores de la aplicación
+│   │   │   └── EmpleadoController.php # Ejemplo de controlador
+│   ├── Models/                    # Modelos de Eloquent (interacción con la BD)
+│   │   └── Empleado.php           # Ejemplo de modelo
+├── resources/                     # Recursos sin compilar (vistas, assets)
+│   └── views/                     # Plantillas Blade (Vistas)
+│   │   └──  welcome.blade.php    # Ejemplo de plantilla
+├── routes/                        # Definición de ruta
+│   ├── web.php                    # Rutas para la web (HTML)
+├── .env                           # Variables de entorno
+
+
+
+### Conceptos Básicos
+
+* **Routing Básico**: Mapea la **URL solicitada** por el usuario a un **controlador** y un **método** específicos.
+* **Controllers Básico**: Recibe la petición, ejecuta la lógica de negocio (usando Modelos) y selecciona la Vista para la respuesta. Actúa como el mediador central del MVC.
+* **Views Básico**: Contiene la capa de presentación (código HTML con datos dinámicos). Laravel usa el motor de plantillas **Blade**.
+
+### Utilidades de Laravel
+
+**Artisan Console**
+Para facilitar el desarrollo, Laravel dispone de diferentes comandos accesibles mediante la línea de comandos. Se accede a ellos desde la carpeta raíz del proyecto usando:
+
+```bash
+php artisan [comando]
+```
