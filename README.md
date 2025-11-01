@@ -1,4 +1,4 @@
-# 🚀 Fundamentos de Desarrollo Web: Frameworks y Laravel
+# Desarrollo Web con Frameworks
 
 ## ¿Qué es un Framework?
 
@@ -43,18 +43,13 @@ Estos manejan la lógica, bases de datos y seguridad:
 | PHP      | **Laravel** | Sintaxis elegante, excelente comunidad, desarrollo rápido (el más popular en PHP). |
 | PHP      | **Symfony** | Componentes reutilizables, robusto, alta calidad de código (base de muchos otros frameworks). |
 | Python   | **Django** | "Baterías incluidas" (todo lo que necesitas), enfoque en el desarrollo rápido y seguro. |
-| Python   | **Flask** | Micro-framework, minimalista y flexible, ideal para APIs simples. |
-| JavaScript| **Express.js** | Minimalista, flexible, rápido y utilizado con Node.js para APIs. |
-| Java     | **Spring Boot** | Líder en el desarrollo empresarial, facilita la creación de aplicaciones Java de forma rápida. |
-| Ruby     | **Ruby on Rails** | "Convención sobre Configuración", muy productivo y con enfoque en la elegancia del código. |
 
 ### Frameworks/Librerías de Frontend (Cliente)
 
 Estos se centran en la interfaz de usuario, interactividad y la experiencia del usuario:
 
-| Lenguaje | Framework/Librería | Énfasis / Característica Destacada |
+| Lenguaje | Framework | Énfasis / Característica Destacada |
 | :------- | :----------------- | :--------------------------------- |
-| JavaScript| **React** | Librería mantenida por Meta. Foco en los **componentes reutilizables** y el DOM Virtual. |
 | TypeScript| **Angular** | Mantenido por Google. Framework completo y robusto para grandes aplicaciones empresariales. |
 | JavaScript| **Vue.js** | Progresivo y fácil de aprender. Combina lo mejor de React y Angular, muy flexible. |
 | JavaScript| **Next.js** | Framework Full-Stack (Frontend y Backend) construido sobre React. Excelente para **SEO** (Server-Side Rendering). |
@@ -145,10 +140,10 @@ El framework implementa el patrón de diseño **MVC (Modelo-Vista-Controlador)**
 
 ### Estructura de Archivos (Ejemplo Simplificado)
 
-
-
 Ya sabemos qué es el patrón de diseño MVC (Modelo-Vista-Controlador). Ahora vamos a ver cómo los desarrolladores de Laravel lo han implementado y cómo vamos a tener que adaptar nuestra aplicación al framework.
 Como punto de partida vamos a adaptar un ejemplo visto con anterioridad (mvc-php-ejemplo). La estructura de archivos es muy similar aunque con algunas diferencias:
+
+```
 laravel-app/
 ├── app/                           # Lógica central (Modelos, Controladores, etc.)
 │   ├── Http/                      # Controladores, Middleware, Peticiones (Requests)
@@ -162,7 +157,7 @@ laravel-app/
 ├── routes/                        # Definición de ruta
 │   ├── web.php                    # Rutas para la web (HTML)
 ├── .env                           # Variables de entorno
-
+```
 
 
 ### Conceptos Básicos
