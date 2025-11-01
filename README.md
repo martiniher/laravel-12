@@ -187,7 +187,7 @@ Una vez instalado, tendremos la posibilidad de crear nuevos proyectos ejecutando
 laravel new laravel-app
 ```
 
-<video src="https://www.youtube.com/embed/O6LVDweUMGM?si=yhZafoK5MxY05CBZ" controls></video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O6LVDweUMGM?si=yhZafoK5MxY05CBZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Estructura de Archivos (Ejemplo Simplificado)
 
