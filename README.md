@@ -187,7 +187,7 @@ Una vez instalado, tendremos la posibilidad de crear nuevos proyectos ejecutando
 laravel new laravel-app
 ```
 
-<video src="instalar-laravel12.mp4" controls></video>
+<video src="instalar-laravel.mp4" controls></video>
 
 ### Estructura de Archivos (Ejemplo Simplificado)
 
