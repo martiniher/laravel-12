@@ -187,7 +187,7 @@ Una vez instalado, tendremos la posibilidad de crear nuevos proyectos ejecutando
 laravel new laravel-app
 ```
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O6LVDweUMGM?si=yhZafoK5MxY05CBZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Instalación Laravel 12](https://img.youtube.com/vi/O6LVDweUMGM/maxresdefault.jpg)](https://www.youtube.com/watch?v=O6LVDweUMGM)
 
 ### Estructura de Archivos (Ejemplo Simplificado)
 
