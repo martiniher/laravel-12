@@ -189,6 +189,16 @@ laravel new laravel-app
 
 [![Instalación Laravel 12](https://img.youtube.com/vi/O6LVDweUMGM/maxresdefault.jpg)](https://www.youtube.com/watch?v=O6LVDweUMGM)
 
+Durante el proceso de instalación tendremos que responder a las siguientes preguntas:
+
+- `Which starter kit would you like to install? [None]`: Pulsamos enter o escribimos `None`. 
+- `Which testing framework do you prefer? [Pest]`: Pulsamos enter o escribimos `Pest`. 
+- `Which database will your application use? [SQLite]:` Escribimos `mysql`. 
+- `Default database updated. Would you like to run the default database migrations? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
+- `Would you like to run npm install and npm run build? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
+
+Cabe destacar el último paso, en el que se ejecuta npm install. Este comando no instala NPM, sino que usa NPM (Node Package Manager) —el administrador de paquetes estándar para el lenguaje de programación JavaScript— para descargar las dependencias de frontend del proyecto. Aunque Laravel es un framework de backend PHP, estas dependencias son necesarias para herramientas como Vite que se encargan de compilar y optimizar los recursos de frontend (como el JavaScript y CSS).
+
 ### Estructura de Archivos (Ejemplo Simplificado)
 
 Como punto de partida vamos a adaptar un ejemplo visto con anterioridad ([mvc-php-ejemplo](https://github.com/jvadillo/mvc-php-ejemplo)). La estructura de archivos es muy similar aunque con algunas diferencias:
