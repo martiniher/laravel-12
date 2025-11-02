@@ -227,7 +227,6 @@ laravel-app/
 
 ### Utilidades de Laravel
 
-**Artisan Console**
-Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la línea de comandos. Para ello, es necesario acceder por terminal a la carpeta raíz del proyecto y utilizar el script Artisan, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo como un archivo PHP.
+Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la consola. Para ello, es necesario acceder desde la terminal a la carpeta raíz del proyecto y utilizar el script `artisan`, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo un archivo PHP.
 
 
