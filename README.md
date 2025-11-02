@@ -235,6 +235,7 @@ laravel-app/
 ```
 
 [Ejemplo 01](https://github.com/martinisolo/laravel-12/tree/ejemplo-laravel12-01)
+[Ejemplo 02](https://github.com/martinisolo/laravel-12/tree/ejemplo-laravel12-02)
 
 
 
