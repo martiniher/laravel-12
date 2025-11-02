@@ -199,7 +199,22 @@ Durante el proceso de instalación tendremos que responder a las siguientes preg
 
 Cabe destacar el último paso, en el que se ejecuta `npm install`. Este comando no instala NPM, sino que usa NPM (Node Package Manager), que es el administrador de paquetes estándar para JavaScript y descargara las dependencias de frontend del proyecto. Aunque Laravel es un framework de backend PHP, estas dependencias son necesarias para herramientas como Vite que se encargan de compilar y optimizar los recursos de frontend (como el JavaScript y CSS).
 
-### Estructura de Archivos (Ejemplo Simplificado)
+### Conceptos básicos necesarios
+
+* **Routing**: El sistema de routing se encarga de mapear la URL solicitada por el usuario con la lógica interna de la aplicación. Su función básica/principal es dirigir cada petición a un controlador y un método específicos.
+* **Controllers**: Una vez que un controlador recibe la petición, ejecuta la lógica de negocio necesaria para responder. Para interactuar con la base de datos, utiliza los modelos, y para presentar la respuesta final al usuario, usa las vistas. El controlador actúa como el mediador central del patrón MVC.
+* **Views**: Las vistas contienen la capa de presentación de la aplicación (generalmente código HTML con datos dinámicos) que se mostrará al usuario. Por defecto, Laravel utiliza el motor de plantillas Blade.
+
+### Utilidades de Laravel
+
+Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la consola. Para ello, es necesario acceder desde la terminal a la carpeta raíz del proyecto y utilizar el script `artisan`, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo un archivo PHP.
+
+### La carpeta `public`
+La carpeta `public` es el único directorio de tu aplicación Laravel al que se le debe permitir el acceso directo desde la web y esta debería ser la carpeta raiz del servidor web. Para poder acceder sin modificar la configuración basta con añadir la carpeta `public` a la url. Ej: `http://localhost/laravel-12/public/empleado`
+
+---
+
+### Practica
 
 Como punto de partida vamos a adaptar un ejemplo visto con anterioridad ([mvc-php-ejemplo](https://github.com/jvadillo/mvc-php-ejemplo)). La estructura de archivos es muy similar aunque con algunas diferencias:
 
@@ -219,66 +234,7 @@ laravel-app/
 ├── .env                               # Variables de entorno
 ```
 
-### Conceptos Básicos necesarios
-
-* **Routing Básico**: El sistema de routing se encarga de mapear la URL solicitada por el usuario con la lógica interna de la aplicación. Su función básica/principal es dirigir cada petición a un controlador y un método específicos.
-* **Controllers Básico**: Una vez que un controlador recibe la petición, ejecuta la lógica de negocio necesaria para responder. Para interactuar con la base de datos, utiliza los modelos, y para presentar la respuesta final al usuario, usa las vistas. El controlador actúa como el mediador central del patrón MVC.
-* **Views Básico**: Las vistas contienen la capa de presentación de la aplicación (generalmente código HTML con datos dinámicos) que se mostrará al usuario. Por defecto, Laravel utiliza el motor de plantillas Blade.
-
-### Utilidades de Laravel
-
-Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la consola. Para ello, es necesario acceder desde la terminal a la carpeta raíz del proyecto y utilizar el script `artisan`, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo un archivo PHP.
-
-#### 1. Primer controlador
-Creamos el controlador
-```bash
-php artisan make:controller EmpleadoController
-```
-
-Editamos en `app\Http\Controllers\EmpleadoController.php`
-```bash
-<?php
-namespace App\Http\Controllers;
-
-use Illuminate\View\View;
-
-class EmpleadoController extends Controller
-{
-    public function index() {
-        return view('empleados.index', [
-            'name' => 'John Doe'
-        ]);
-    }
-}
-```
-
-#### 2. Primera vista
-Creamos la vista
-```
-php artisan make:view empleados.index
-```
-
-Editamos en `resources\views\empleados\index.blade.php`
-```bash
-<html>
-    <body>
-        <h1>Hello, {{ $name }}</h1>
-    </body>
-</html>
-```
-
-#### 3. Enrutamos la petición
-Editamos en `routes\web.php`
-
-```bash
-<?php
-
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\EmpleadoController;
-
-Route::get('/empleado', [EmpleadoController::class, 'index']);
-```
+[Ejemplo 01](https://github.com/martinisolo/laravel-12/tree/ejemplo-laravel12-01)
 
 
 
