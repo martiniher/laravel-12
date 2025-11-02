@@ -68,13 +68,13 @@ Laravel se ha convertido en el framework de PHP más utilizado debido a la forma
 
 1. Sintaxis Elegante y Legible: Su código está diseñado para ser expresivo y fácil de entender. Esto reduce la curva de aprendizaje y acelera el desarrollo.
 2. Productividad Rápida ("Time-to-Market"): Incluye herramientas integradas para tareas comunes, lo que elimina la necesidad de escribir código repetitivo:
-    1. Eloquent ORM: Una capa de abstracción de bases de datos que permite interactuar con la base de datos usando sintaxis de PHP (Modelos), en lugar de SQL puro.
-    2. Sistema de Rutas y Resource Controllers: Facilita la implementación de la arquitectura RESTful (como vimos con store, update, destroy).
-    3. Artisan: Una potente interfaz de línea de comandos (CLI) que permite generar código, manejar migraciones de bases de datos, y ejecutar tareas.
+    - Eloquent ORM: Una capa de abstracción de bases de datos que permite interactuar con la base de datos usando sintaxis de PHP (Modelos), en lugar de SQL puro.
+    - Sistema de Rutas y Resource Controllers: Facilita la implementación de la arquitectura RESTful (como vimos con store, update, destroy).
+    - Artisan: Una potente interfaz de línea de comandos (CLI) que permite generar código, manejar migraciones de bases de datos, y ejecutar tareas.
 3. Seguridad Integrada: Laravel maneja automáticamente muchas amenazas comunes, proporcionando protección contra ataques como:
-    1.  Falsificación de Solicitudes entre Sitios (CSRF).
-    2. Inyección SQL.
-    3. Scripts entre Sitios (XSS).
+    -  Falsificación de Solicitudes entre Sitios (CSRF).
+    - Inyección SQL.
+    - Scripts entre Sitios (XSS).
 4. Ecosistema y Comunidad: Cuenta con un ecosistema robusto (Laravel Forge, Vapor, Nova) y una comunidad muy activa que proporciona documentación, tutoriales y librerías adicionales (gestionadas a través de Composer).
 
 En resumen, si quieres construir una aplicación web moderna, escalable y segura utilizando PHP, Laravel proporciona el equilibrio perfecto entre simplicidad, funcionalidad y estándares.
@@ -228,5 +228,58 @@ laravel-app/
 ### Utilidades de Laravel
 
 Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la consola. Para ello, es necesario acceder desde la terminal a la carpeta raíz del proyecto y utilizar el script `artisan`, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo un archivo PHP.
+
+#### 1. Primer controlador
+Creamos el controlador
+```bash
+php artisan make:controller EmpleadoController
+```
+
+Editamos en `app\Http\Controllers\EmpleadoController.php`
+```bash
+<?php
+namespace App\Http\Controllers;
+
+use Illuminate\View\View;
+
+class EmpleadoController extends Controller
+{
+    public function index() {
+        return view('empleados.index', [
+            'name' => 'John Doe'
+        ]);
+    }
+}
+```
+
+#### 2. Primera vista
+Creamos la vista
+```
+php artisan make:view empleados.index
+```
+
+Editamos en `resources\views\empleados\index.blade.php`
+```bash
+<html>
+    <body>
+        <h1>Hello, {{ $name }}</h1>
+    </body>
+</html>
+```
+
+#### 3. Enrutamos la petición
+Editamos en `routes\web.php`
+
+```bash
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\EmpleadoController;
+
+Route::get('/empleado', [EmpleadoController::class, 'index']);
+```
+
+
 
 
