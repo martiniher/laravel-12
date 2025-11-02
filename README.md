@@ -48,3 +48,5 @@ use App\Http\Controllers\EmpleadoController;
 
 Route::get('/empleado', [EmpleadoController::class, 'index']);
 ```
+
+<img width="646" height="101" alt="imagen" src="https://github.com/user-attachments/assets/1cb7affc-2743-422c-b951-6d7fbbaeae44" />
