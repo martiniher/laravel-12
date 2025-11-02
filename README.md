@@ -176,7 +176,7 @@ Para poner en marcha la aplicación y simplificar la explicación, vamos utiliza
 
 ### Instalación de Laravel
 
-Aunque podríamos instalarlo directamente desde Composer, vamos a usar el instalador de Laravel. Para ello, utilizaremos Composer para instalarlo de forma global, lo cual solo es necesario realizar una vez en el sistema:
+Aunque podríamos instalarlo directamente desde Composer, vamos a usar el instalador de Laravel. Para ello, utilizaremos Composer para instalarlo de forma global, lo cual solo es necesario realizar una única vez en el sistema:
 
 ```
 composer global require laravel/installer
