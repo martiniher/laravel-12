@@ -197,7 +197,7 @@ Durante el proceso de instalación tendremos que responder a las siguientes preg
 - `Default database updated. Would you like to run the default database migrations? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
 - `Would you like to run npm install and npm run build? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
 
-Cabe destacar el último paso, en el que se ejecuta `npm install`. Este comando no instala NPM, sino que usa NPM (Node Package Manager) —el administrador de paquetes estándar para el lenguaje de programación JavaScript— para descargar las dependencias de frontend del proyecto. Aunque Laravel es un framework de backend PHP, estas dependencias son necesarias para herramientas como Vite que se encargan de compilar y optimizar los recursos de frontend (como el JavaScript y CSS).
+Cabe destacar el último paso, en el que se ejecuta `npm install`. Este comando no instala NPM, sino que usa NPM (Node Package Manager), que es el administrador de paquetes estándar para JavaScript y descargara las dependencias de frontend del proyecto. Aunque Laravel es un framework de backend PHP, estas dependencias son necesarias para herramientas como Vite que se encargan de compilar y optimizar los recursos de frontend (como el JavaScript y CSS).
 
 ### Estructura de Archivos (Ejemplo Simplificado)
 
