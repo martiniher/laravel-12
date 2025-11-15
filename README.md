@@ -294,6 +294,16 @@ Este archivo debe ser editado con tus credenciales de base de datos locales y ot
 cp .env.example .env
 ```
 
+Cabe destacar del archivo .env los datos de conexión a la base de datos, que son esenciales para que la aplicación sepa dónde y cómo almacenar y recuperar información.
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_12
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
 Generar la Application Key (clave de cifrado): En proyectos Laravel, necesitas generar una clave única para fines de seguridad.
 ```bash
 php artisan key:generate
@@ -312,30 +322,33 @@ npm install
 
 Compilar los Assets:
 
-Una vez instaladas las dependencias, ejecutas el comando de compilación. Este comando procesa los archivos fuente y genera los archivos estáticos finales (como `app.css` o `app.js`) dentro de carpetas públicas, a menudo `/public/build` o `/public/js`, que se ignoraron inicialmente en el archivo .gitignore.
-
-```bash
-npm run dev
-```
+Una vez instaladas las dependencias, ejecutas el comando de compilación. Este comando procesa los archivos fuente y genera los archivos estáticos finales (como `app.css` o `app.js`) dentro de carpetas públicas, a menudo `/public/build` o `/public/js`, que se ignoraron inicialmente en el archivo `.gitignore`.
 
 Para una compilación optimizada para producción, usa:
 ```bash
 npm run build
 ```
 
-#### 5. Ejecución de las Migraciones de la Base de Datos
+#### 5. Ejecución de las Migraciones de la BBDD
 Una vez que has clonado el repositorio, instalado las dependencias y configurado el archivo `.env` con las credenciales de tu base de datos local, el paso final y crucial es crear la estructura de la base de datos definida en el código.
 
 Esto se realiza mediante el comando migrate de Artisan:
 
-Ejecutar las migraciones: Este comando lee los archivos de migración ubicados en la carpeta `database/migrations` y crea las tablas correspondientes en tu base de datos.
+Ejecutar las migraciones: Este comando lee los archivos de migración ubicados en la carpeta `database/migrations` y crea las tablas correspondientes en tu base de datos. Con el parámetro `--seed` insertaremos los datos iniciales en esas tabla.
 
 ```bash
 php artisan migrate --seed
 ```
 
-#### Resumen de Pasos Completos:
-Para asegurar que la aplicación esté totalmente funcional después de clonar el repositorio:
+Un seeder es un archivo (o clase) que se utiliza para insertar datos iniciales en las tablas de la base de datos.
+Se ejecutan después de las migraciones para:
+- Crear usuarios por defecto (por ejemplo, un administrador).
+- Añadir configuraciones iniciales.
+- Poblar la base de datos con datos de prueba para el desarrollo.
+
+En resumen, un seeder es la herramienta que llena las tablas vacías con información esencial para que la aplicación comience a funcionar.
+
+#### Resumen
 
 - Clonar: `git clone https://github.com/martiniher/laravel-12.git`
 - Moverse: `cd laravel-12`
@@ -343,7 +356,7 @@ Para asegurar que la aplicación esté totalmente funcional después de clonar e
 - Configuración: `cp .env.example .env`
 - Clave: `php artisan key:generate`
 - Dependencias NPM: `npm install`
-- Compilar los Assets `npm run dev`
+- Compilar los Assets `npm run build`
 - Migraciones: `php artisan migrate --seed`
 
 
