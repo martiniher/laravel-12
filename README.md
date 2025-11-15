@@ -239,7 +239,7 @@ laravel-app/
 
 ---
 
-### Recuperar Aplicación de un Repositorio Git
+### Puesta en Marcha del Proyecto usando Git
 Como gestor de versiones estamos usando Git. Para poder comenzar a trabajar con el proyecto, necesitamos tenerlo instalado en nuestro ordenador local.
 
 #### 1. Clonar el Repositorio
@@ -358,7 +358,8 @@ En resumen, un seeder es la herramienta que llena las tablas vacías con informa
 - Dependencias NPM: `npm install`
 - Compilar los Assets `npm run build`
 - Migraciones: `php artisan migrate --seed`
-
+  
+[Puesta en Marcha del Proyecto usando Git](https://youtu.be/YNecIEK3utM)
 
 
 
