@@ -359,7 +359,7 @@ En resumen, un seeder es la herramienta que llena las tablas vacías con informa
 - Compilar los Assets `npm run build`
 - Migraciones: `php artisan migrate --seed`
   
-[Puesta en Marcha del Proyecto usando Git](https://youtu.be/YNecIEK3utM)
+[Puesta en marcha del proyecto usando git](https://youtu.be/YNecIEK3utM)
 
 
 
