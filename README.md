@@ -1,368 +1,996 @@
-# Desarrollo Web con Frameworks
+Original:
+[https://laravel9.netlify.app/04-nivel-intermedio/](https://laravel9.netlify.app/04-nivel-intermedio/)
 
-## ¿Qué es un Framework?
+### 1.- Crear un Router
+Las rutas son los puntos de entrada a nuestra aplicación. Cada vez que un usuario hace una petición a una de las rutas de la aplicación, Laravel trata la petición mediante un Router definido en el directorio routes, el cual será el encargado de direccionar la petición a un Controlador. Las rutas accesibles para navegadores estarán definidas en el archivo routes/web.php y aquellas accesibles para servicios web (webservices) estarán definidas en el archivo routes/api.php. A continuación se muestra un ejemplo:
 
-Un **framework** (marco de trabajo) es una estructura de código predefinida y un conjunto de herramientas que proporcionan la estructura fundamental y las reglas para construir una aplicación.
-
----
-
-## ¿Para qué sirve?
-
-Su propósito principal es aumentar la **productividad** y la **estandarización** del desarrollo:
-
-* **Velocidad**: Evita que tengas que escribir código repetitivo (como la gestión de sesiones, rutas o la conexión a bases de datos) desde cero.
-* **Organización**: Impone un patrón de diseño (como **MVC - Modelo, Vista, Controlador**) que ayuda a mantener el código limpio y escalable.
-* **Seguridad**: Incluye mecanismos de seguridad ya probados contra ataques comunes (como **SQL Injection** o **XSS**).
-* **Comunidad**: Permite que varios desarrolladores trabajen en el mismo proyecto con una convención y un conjunto de herramientas compartidas.
-
----
-
-## ¿Qué diferencias tiene con una Librería?
-
-La principal diferencia radica en quién tiene el **control del flujo** del programa:
-
-| Característica | Framework | Librería |
-| :------------- | :--------------: | :------------- |
-| **Control del Flujo**| **Inversión de Control (IoC)**: El framework define la estructura y el ciclo de vida de la aplicación. | **Control del Desarrollador**: El código del desarrollador dirige el flujo de la aplicación. |
-| **Arquitectura** | Proporciona la **estructura completa** del proyecto (el esqueleto). | Proporciona **funcionalidades específicas** y auxiliares. |
-| **Alcance** | Se utiliza para construir **toda** la aplicación (ej. backend o frontend). | Se utiliza para una **tarea específica** (ej. manipular fechas, hacer peticiones HTTP).|
-| **Ejemplos** | Laravel, Symfony, Django, Angular. | jQuery, Lodash, Moment.js, Guzzle (en PHP). |
-
----
-
-## ¿Cuáles son los principales Frameworks de Desarrollo Web?
-
-Los frameworks de desarrollo web se dividen principalmente en **Backend** (lógica del servidor) y **Frontend** (interfaz de usuario).
-
-### Frameworks de Backend (Servidor)
-
-Estos manejan la lógica, bases de datos y seguridad:
-
-| Lenguaje | Framework Principal | Énfasis / Característica Destacada |
-| :------- | :------------------ | :--------------------------------- |
-| PHP      | **Laravel** | Sintaxis elegante, excelente comunidad, desarrollo rápido (el más popular en PHP). |
-| PHP      | **Symfony** | Componentes reutilizables, robusto, alta calidad de código (base de muchos otros frameworks). |
-| Python   | **Django** | Enfocado en el desarrollo rápido y seguro. |
-
-### Frameworks/Librerías de Frontend (Cliente)
-
-Estos se centran en la interfaz de usuario, interactividad y la experiencia del usuario:
-
-| Lenguaje | Framework | Énfasis / Característica Destacada |
-| :------- | :----------------- | :--------------------------------- |
-| TypeScript| **Angular** | Mantenido por Google. Framework completo y robusto para grandes aplicaciones empresariales. |
-| JavaScript| **Vue.js** | Progresivo y fácil de aprender. Combina lo mejor de React y Angular, muy flexible. |
-| JavaScript| **Next.js** | Framework Full-Stack (Frontend y Backend) construido sobre React. Excelente para **SEO** (Server-Side Rendering). |
-
----
-
-## ¿Qué es Laravel?
-
-**Laravel** es un framework de desarrollo web de código abierto escrito en **PHP**. Fue creado por Taylor Otwell y lanzado por primera vez en 2011. Su objetivo principal es hacer que el desarrollo de aplicaciones web complejas sea más **rápido, fácil y agradable** para el desarrollador.
-
-Laravel sigue el patrón de diseño **Modelo-Vista-Controlador (MVC)**, lo que ayuda a organizar la aplicación de manera lógica y modular.
-
-### ¿Por qué usar Laravel?
-
-Laravel se ha convertido en el framework de PHP más utilizado debido a la forma en que simplifica tareas comunes y promueve la calidad del código:
-
-1. Sintaxis Elegante y Legible: Su código está diseñado para ser expresivo y fácil de entender. Esto reduce la curva de aprendizaje y acelera el desarrollo.
-2. Productividad Rápida ("Time-to-Market"): Incluye herramientas integradas para tareas comunes, lo que elimina la necesidad de escribir código repetitivo:
-    - Eloquent ORM: Una capa de abstracción de bases de datos que permite interactuar con la base de datos usando sintaxis de PHP (Modelos), en lugar de SQL puro.
-    - Sistema de Rutas y Resource Controllers: Facilita la implementación de la arquitectura RESTful (como vimos con store, update, destroy).
-    - Artisan: Una potente interfaz de línea de comandos (CLI) que permite generar código, manejar migraciones de bases de datos, y ejecutar tareas.
-3. Seguridad Integrada: Laravel maneja automáticamente muchas amenazas comunes, proporcionando protección contra ataques como:
-    -  Falsificación de Solicitudes entre Sitios (CSRF).
-    - Inyección SQL.
-    - Scripts entre Sitios (XSS).
-4. Ecosistema y Comunidad: Cuenta con un ecosistema robusto (Laravel Forge, Vapor, Nova) y una comunidad muy activa que proporciona documentación, tutoriales y librerías adicionales (gestionadas a través de Composer).
-
-En resumen, si quieres construir una aplicación web moderna, escalable y segura utilizando PHP, Laravel proporciona el equilibrio perfecto entre simplicidad, funcionalidad y estándares.
-
----
-
-## ¿Qué es Composer?
-
-Composer no es un gestor de paquetes en el sentido tradicional (como apt o yum) sino un **gestor de dependencias**. Esto significa que:
-
-1. **Define Dependencias**: Lee el archivo composer.json de tu proyecto (donde listas qué librerías necesitas).
-2. **Resuelve Dependencias**: Averigua qué otras librerías requiere cada una de las que pediste (dependencias transitivas).
-3. **Descarga Librerías**: Descarga estas librerías (paquetes) del repositorio Packagist.org y las coloca en una carpeta llamada vendor/.
-4. **Autocarga (Autoloading)**: Genera el archivo vendor/autoload.php que cumple con el estándar PSR-4, permitiendo que las clases de todas las librerías descargadas estén disponibles automáticamente en tu código sin usar sentencias require o include.
-
-### ¿Por qué es esencial en Laravel?
-
-Laravel es un framework moderno que está construido sobre la filosofía de reutilizar componentes y seguir los estándares de PHP. Composer es fundamental para esta arquitectura por varias razones:
-
-- **Instalación del Framework**: Laravel en sí mismo es un conjunto de paquetes de Composer. Sin Composer, no podrías instalar ni inicializar un proyecto de Laravel.
-- **Gestión de Dependencias**: Laravel depende de docenas de componentes de terceros (muchos de Symfony) para funcionalidades esenciales, como el enrutamiento, las peticiones HTTP, la consola Artisan, y la capa de base de datos (Eloquent). Composer gestiona estas dependencias por ti.
-- **Facilita el Desarrollo**: Te permite añadir rápidamente funcionalidad a tu proyecto, como un sistema de autenticación (ej. Laravel Breeze o Sanctum), una herramienta de depuración, o integraciones con servicios externos, simplemente listándolas en composer.json.
-- **Estándares PSR**: Composer es el motor que implementa los estándares de autocarga PSR-4 para todos los archivos de tu proyecto y los de las librerías, lo que mantiene el código organizado y estandarizado.
-
----
-
-## ¿Qué son los estándares PSR?
-
-Los estándares PSR (PHP Standards Recommendation) son un conjunto de estándares y directrices propuestos por el grupo PHP Framework Interop Group (PHP-FIG). Su objetivo es asegurar la interoperabilidad entre diferentes frameworks y librerías de PHP, facilitando que el código sea consistente y reutilizable.
-
-Laravel sigue un conjunto estricto de convenciones de nomenclatura basadas en los estándares de PHP (PSR) y el patrón MVC (Modelo-Vista-Controlador) para garantizar la coherencia y la legibilidad.
-
-Estas convenciones no son obligatorias, pero seguirlas facilita enormemente el uso de las características mágicas de Laravel (como Eloquent) y hace que tu código sea instantáneamente legible por cualquier desarrollador de Laravel.
-
-### Convenciones de Nomenclatura en Laravel
-
-#### 1. Clases (Modelos, Controladores, Servicios)
-
-Las clases siguen la convención PascalCase (o UpperCamelCase) y generalmente deben ser singulares para los Modelos y plurales o descriptivas para otros:
-
-- Modelos: Singular y PascalCase.
-    - Ejemplo: User, Product, PostTag.
-- Controladores: PascalCase, generalmente terminan en Controller.
-    - Ejemplo: UserController, OrderController, Api\ProductController.
-- Interfaces/Traits/Abstracts: PascalCase, con prefijos o sufijos descriptivos.
-    - Ejemplo: Authenticatable, CanBeVoted.
-
-
-#### 2. Funciones y Métodos
-
-Los métodos y funciones dentro de las clases siguen la convención camelCase:
-
-- Métodos del Controlador: Tienen nombres que describen la acción (especialmente en los Resource Controllers).
-    - Ejemplo: index(), store(), update(), show().
-- Métodos de Clases:
-    - Ejemplo: getProductName(), calculateTotal(), isPublished().
-- Métodos de Relación en Modelos: Generalmente en camelCase singular para relaciones uno a uno o uno a muchos, y plural para relaciones muchos a muchos.
-    - Ejemplo (Usuario): hasOne('Post') se llama post().
-    - Ejemplo (Post): belongsToMany('Tag') se llama tags().
-
-#### 3. Archivos y Directorios
-
-Laravel organiza los archivos para reflejar el espacio de nombres de la clase y sigue el estándar PSR-4:
-
-- Archivos de Clases: El nombre del archivo debe coincidir exactamente con el nombre de la clase, incluyendo mayúsculas.
-    - Ejemplo: La clase ProductController se guarda en el archivo ProductController.php.
-- Vistas (Views): Utilizan snake_case y generalmente terminan en .blade.php.
-    - Ejemplo: user_profile.blade.php, products.index.blade.php.
-- Directorios: Generalmente en PascalCase para directorios que contienen clases (como app/Http/Controllers) o minúsculas para directorios de configuración o vistas.
-
-#### 4. Base de Datos (Tablas y Columnas)
-
-Aunque puedes anularlas, Laravel tiene fuertes convenciones predeterminadas para las bases de datos:
-
-- Nombres de Tablas: snake_case (separado por guiones bajos) y plural.
-    - Ejemplo: users, products, post_tags.
-- Nombres de Modelos: El modelo asociado es la forma singular y PascalCase del nombre de la tabla (ej: la tabla users usa el modelo User).
-- Nombres de Columnas: snake_case singular.
-    - Ejemplo: first_name, is_active, created_at.
-- Claves Foráneas (Foreign Keys): Usan el nombre del modelo singular en snake_case seguido de _id.
-    - Ejemplo: Una clave foránea a la tabla users se llama user_id.
-- Tablas Pivot (Many-to-Many): Combinan los nombres singulares de las dos tablas en orden alfabético y separadas por guion bajo.
-    - Ejemplo: Una tabla pivot entre posts y tags se llama post_tag.
-
----
-
-## Laravel, ¿Por dónde empezar?
-
-Ya sabemos qué es el patrón de diseño MVC (Modelo-Vista-Controlador). Ahora vamos a ver cómo los desarrolladores de Laravel lo han implementado y cómo vamos a tener que **adaptar nuestra aplicación al framework**.
-
-### Entorno de desarrollo local
-
-Para poner en marcha la aplicación y simplificar la explicación, vamos utilizar un entorno de desarrollo integrado [Laragon](https://laragon.org/), que incluye los componentes necesarios:
-
-- PHP (con las extensiones requeridas).
-- Servidor Web (Apache/Nginx).
-- Base de Datos (MySQL/MariaDB).
-- Composer (Gestor de dependencias de PHP).
-
-### Instalación de Laravel
-
-Aunque podríamos instalarlo directamente desde Composer, vamos a usar el instalador de Laravel. Para ello, utilizaremos Composer para instalarlo de forma global, lo cual solo es necesario realizar una única vez en el sistema:
-
-```
-composer global require laravel/installer
+```php
+Route::get('/articulos', function () {
+    return '¡Vamos a leer unos articulos!';
+});
 ```
 
-Una vez instalado, tendremos la posibilidad de crear nuevos proyectos ejecutando el siguiente comando:
+El código anterior muestra cómo se define una ruta básica. En este caso, cuando el usuario realice una petición sobre /articulos, nuestra aplicación ejecutará la función anónima definida. En este caso enviará una respuesta al usuario con el string '¡Vamos a leer unos articulos!'.
+
+Podemos especificar tantas rutas como queramos:
+
+```php
+Route::get('/articulos', function () {
+    return '¡Vamos a leer unos articulos!';
+});
+
+Route::get('/usuarios', function () {
+    return 'Hay muchos usuarios en esta aplicación';
+});
 ```
-laravel new laravel-app
-```
+También es posible responder a peticiones de tipo POST, por ejemplo para recibir datos de formularios:
 
-[![Instalación Laravel 12](https://img.youtube.com/vi/O6LVDweUMGM/maxresdefault.jpg)](https://www.youtube.com/watch?v=O6LVDweUMGM)
+```php
 
-Durante el proceso de instalación tendremos que responder a las siguientes preguntas:
+Route::get('/articulos', function () {
+    return '¡Vamos a leer unos articulos!';
+});
 
-- `Which starter kit would you like to install? [None]`: Pulsamos enter o escribimos `None`. 
-- `Which testing framework do you prefer? [Pest]`: Pulsamos enter o escribimos `Pest`. 
-- `Which database will your application use? [SQLite]:` Escribimos `mysql`. 
-- `Default database updated. Would you like to run the default database migrations? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
-- `Would you like to run npm install and npm run build? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
-
-Cabe destacar el último paso, en el que se ejecuta `npm install`. Este comando no instala NPM, sino que usa NPM (Node Package Manager), que es el administrador de paquetes estándar para JavaScript y descargara las dependencias de frontend del proyecto. Aunque Laravel es un framework de backend PHP, estas dependencias son necesarias para herramientas como Vite que se encargan de compilar y optimizar los recursos de frontend (como el JavaScript y CSS).
-
-### Conceptos básicos necesarios
-
-* **Routing**: El sistema de routing se encarga de mapear la URL solicitada por el usuario con la lógica interna de la aplicación. Su función básica/principal es dirigir cada petición a un controlador y un método específicos.
-* **Controllers**: Una vez que un controlador recibe la petición, ejecuta la lógica de negocio necesaria para responder. Para interactuar con la base de datos, utiliza los modelos, y para presentar la respuesta final al usuario, usa las vistas. El controlador actúa como el mediador central del patrón MVC.
-* **Views**: Las vistas contienen la capa de presentación de la aplicación (generalmente código HTML con datos dinámicos) que se mostrará al usuario. Por defecto, Laravel utiliza el motor de plantillas Blade.
-
-### Utilidades de Laravel
-
-Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la consola. Para ello, es necesario acceder desde la terminal a la carpeta raíz del proyecto y utilizar el script `artisan`, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo un archivo PHP.
-
-### La carpeta `public`
-La carpeta `public` es el único directorio de tu aplicación Laravel al que se le debe permitir el acceso directo desde la web y esta debería ser la carpeta raiz del servidor web. Para poder acceder sin modificar la configuración basta con añadir la carpeta `public` a la url. Ej: `http://localhost/laravel-12/public/empleado`
-
----
-
-### Practica
-
-Como punto de partida vamos a adaptar un ejemplo visto con anterioridad ([mvc-php-ejemplo](https://github.com/jvadillo/mvc-php-ejemplo)). La estructura de archivos es muy similar aunque con algunas diferencias:
-
-```
-laravel-app/
-├── app/                               # Lógica central (Modelos, Controladores, etc.)
-│   ├── Http/                          # Controladores, Middleware, Peticiones (Requests)
-│   │   ├── Controllers/               # Controladores de la aplicación
-│   │   │   └── EmpleadoController.php # Ejemplo de controlador
-│   ├── Models/                        # Modelos de Eloquent (interacción con la BD)
-│   │   └── Empleado.php               # Ejemplo de modelo
-├── resources/                         # Recursos sin compilar (vistas, assets)
-│   └── views/                         # Plantillas Blade (Vistas)
-│   │   └──  welcome.blade.php         # Ejemplo de plantilla
-├── routes/                            # Definición de ruta
-│   ├── web.php                        # Rutas para la web (HTML)
-├── .env                               # Variables de entorno
+Route::post('/articulos', function () {
+    return '¡Vamos a insertar un artículo!';
+});
 ```
 
-- [Ejemplo 01](https://github.com/martiniher/laravel-12/tree/ejemplo-laravel12-01)
-- [Ejemplo 02](https://github.com/martiniher/laravel-12/tree/ejemplo-laravel12-02)
+Aparte de ejecutar las acciones definidas para cada ruta, Laravel ejecutará el middlewere específico en función del Router utilizado (por ejemplo, el middlewere relacionado con las peticiones web proveerá de funcionalidades como el estado de la sesión o la protección CSRF).
 
----
-
-### Recuperar Aplicación de un Repositorio Git
-Como gestor de versiones estamos usando Git. Para poder comenzar a trabajar con el proyecto, necesitamos tenerlo instalado en nuestro ordenador local.
-
-#### 1. Clonar el Repositorio
-Usando el comando `git clone [URL-del-repositorio]` descargamos una copia completa del proyecto, incluyendo todo su historial, a nuestro equipo.
+Ver las rutas creadas
+La utilidad Artisan de Laravel nos provee de comandos muy útiles (por ejemplo, para crear controladores o migraciones). Disponemos de un comando concreto para mostrar todas las rutas de una aplicación de forma rápida. Basta con ejecutar el siguiente comando en la consola:
 
 ```bash
-git clone https://github.com/martiniher/laravel-12.git
-```
-Este comando crea una nueva carpeta con el nombre del repositorio y descarga todos los archivos en ella.
-
-#### 2. Entender y Utilizar el Archivo `.gitignore`
-En la carpeta raíz del proyecto encontrarás un archivo llamado `.gitignore`. Este archivo es crucial, ya que contiene una lista de archivos y carpetas que Git debe ignorar y que no se incluirán en el repositorio.
-
-##### Lista de Archivos Ignorados:
-```
-*.log
-.DS_Store
-.env
-.env.backup
-.env.production
-... (y otros archivos y carpetas)
-/vendor
-/node_modules
-...
+php artisan route:list
 ```
 
-##### Propósito del `.gitignore`:
-Ocultar datos sensibles: Archivos como `.env` (Environment file) contienen datos confidenciales y de configuración específica del entorno de desarrollo o producción (como contraseñas y tokens de bases de datos o servicios externos). Es fundamental que no se suban al repositorio público.
+Si quieres que Laravel no muestre las rutas creadas por paquetes de terceros (vendor) puedes añadir el flag except-vendor al final:
+```bash
+php artisan route:list --except-vendor
+```
 
-Excluir dependencias: Carpetas como `/vendor` (para dependencias de PHP gestionadas por Composer) y `/node_modules` (para dependencias de JavaScript/NPM) suelen ser muy grandes. Se ignoran porque pueden reconstruirse automáticamente en cualquier máquina.
+Devolver un JSON
+También es posible devolver un JSON. Laravel convertirá automáticamente cualquier array a JSON:
 
-Excluir archivos generados: Archivos de cache, logs (`*.log`), archivos temporales (`.DS_Store`, `Thumbs.db`), y los assets compilados (`/public/build`, `/public/hot`) se generan automáticamente.
+```php
+Route::get('/articulos', function () {
+    $articulos = [
+        [
+            "id" => 1,
+            "titulo" => "Primer artículo..."
+        ],
+        [
+            "id" => 1,
+            "titulo" => "Segundo artículo..."
+        ]
+    ];
+    return $articulos;
+});
+```
 
-#### 3. Instalación de Dependencias y Configuración Inicial
-Dado que el archivo .gitignore excluye las carpetas de dependencias (/vendor y /node_modules) y los archivos de configuración sensible (.env), el siguiente paso esencial es reconstruir estos elementos para que la aplicación funcione:
+Parámetros en la ruta
+Una URL puede contener información de nuestro interés. Laravel permite acceder a esta información de forma sencilla utilizando los parámetros de ruta:
 
-Moverse a la carpeta del proyecto:
+```php
+Route::get('articulos/{id}', function ($id) {
+    return 'Vas a leer el artículo: '.$id;
+});
+```
+Los parámetros de ruta vienen definidos entre llaves {} y se inyectan automáticamente en las callbacks. Es posible utilizar más de un parámetro de ruta:
+
+```php
+Route::get('articulos/{id}/usuario/{name}', function ($id, $name) {
+    return 'Vas a leer el artículo: '.$id. ' del usuario' .$name;
+});
+```
+
+Para indicar un parámetro como opcional, le tenemos que añadir el símbolo ? al final del parámentro. Le tendremos que añadir un valor por defecto para asegurarnos su correcto funcionamiento:
+
+```php
+Route::get('articulos/{id?}', function ($id = 0) {
+    return 'Vas a leer el artículo: '.$id;
+});
+```
+
+Acceder a la información de la petición
+También es posible acceder a la información enviada en la petición mediante el método request(). Por ejemplo, el siguiente código devolverá el valor enviado para el parámetro 'fecha' de la URL /articulos?fecha=hoy:
+
+```php
+Route::get('/articulos', function () {
+    $fecha = request('fecha');
+    return $fecha;
+});
+```
+
+Rutas con nombre
+Es posible asignar nombres a las rutas que sirvan para referirnos a ellas. De esta forma, en caso de que la URL de una ruta cambie, únicamente tendremos que cambiarlo en el router y no en todos los ficheros HTML donde estemos enlazando a dicha ruta.
+
+Para especificar el nombre a una ruta debemos utilizar la función name(), la cual deberá recibir como parámetro el nombre que se desea asignar a la ruta:
+
+
+```php
+Route::get('/articulos', function () {
+    return "Ruta con nombre!";
+})->name('articulos.index');
+```
+
+En un futuro veremos cómo generar las URLs a partir de su nombre. Por ejemplo, en lugar de utilizar:
+```html
+<a href="/articulos">Ver artículos</a>
+```
+utilizaremos:
+```html
+<a href="{{ route('articulos.index') }}">Ver artículos</a>
+```
+
+#### Hands on! (2/7)
+Añade a tu aplicación revistapp dos nuevas rutas. - articulos/: Devolverá un array de artículos en formato JSON. Asigna el nombre articulos.index a la ruta utilizando la función name(). - articulos/{id}: Devolverá la siguiente frase: "Gracias por leer el artículo con id: {id}". Asigna el nombre articulos.show a la ruta utilizando la función name().
+
+Solución
+
+```php
+Route::get('/articulos', function () {
+    $articulos = [
+        ["id" => 1, "titulo" => "Primer artículo..."],
+        ["id" => 2, "titulo" => "Segundo artículo..."],
+        ["id" => 3, "titulo" => "Tercer artículo..."],
+    ];
+    return $articulos;
+})->name('articulos.index');
+
+Route::get('articulos/{id}', function ($id) {
+    $frase = "Gracias por leer el artículo con id: " . $id;
+    return $frase;
+})->name('articulos.show');
+```
+
+### Paso 2 - Crear una vista
+Definiendo una vista sencilla
+Las vistas son plantillas que contienen el HTML que enviará nuestra aplicación a los usuarios. Se almacenan en el directorio /resources/views de nuestro proyecto.
+
+```html
+<!-- vista almacenada en /resources/views/articulos.blade.php -->
+<html>
+    <body>
+        <h1>¡Vamos a leer unos artículos!</h1>
+    </body>
+</html>
+```
+
+Tendrán la extensión .blade.php ya que Laravel utiliza el motor de plantillas Blade, como veremos más adelante.
+
+Devolver una vista
+Cargar y devolver una vista al usuario es tan sencillo como utilizar la función global (helper) view():
+
+```php
+Route::get('/articulos', function () {
+    return view('articulos');
+})->name('articulos');
+```
+
+Al indicarle el nombre de la vista como parámetro no es necesario indicar la ruta completa de la vista ni la extensión .blade.php. Laravel asume que las vistas estarán en la carpeta /resources/views y que tendrán la extensión .blade.php.
+Acceder a datos desde la vista
+Laravel utiliza el motor de plantillas Blade por defecto. Un motor de plantillas permite crear vistas empleando código HTML junto con código específico del motor empleado. De esta forma podremos mostrar información almacenada en variables, crear condiciones if/else, estructuras repetitivas, etc.
+
+En Blade mostrar datos almacenados en variables es muy sencillo:
+
+```php
+<?php $nombre = "Nora"; ?>
+<html>
+    <body>
+    <h1>Vamos a leer al escritor {{ $nombre }}</h1>
+        </ul>
+    </body>
+</html>
+```
+
+Tal y como se puede ver en el ejemplo anterior, basta con escribir el nombre de la variable entre llaves {{ }}. Es una buena práctica evitar mezclar el código PHP con nuestras vistas, por lo que toda la información que necesitemos en las vistas la ubicaremos fuera de ellas. Existen distintas formas de pasarle variables a las vistas:
+
+La primera opción sería utilizando el método with(), pasándole como parámetros el nombre de la variable y su valor:
+
+```php
+
+Route::get('/', function () {
+    $nombre = "Nora";
+    return view('saludo')->with('nombre', $nombre);
+});
+```
+
+Otra forma sería enviándolo como array:
+
+```php
+
+Route::get('/', function () {
+    $nombre = "Nora";
+    return view('saludo')->with(['nombre' => $nombre]);
+});
+```
+También podríamos pasar el array como segundo parámetro de la función view() y no utilizar with():
+```php
+
+Route::get('/', function () {
+    $nombre = "Nora";
+    return view('saludo',['nombre' => $nombre]);
+});
+```
+
+Blade permite iterar por los datos de una colección o array. El siguiente ejemplo muestra cómo iterar por un array de strings de forma rápida:
+
+```php
+<!-- Vista almacenada en resources/views/articulos.blade.php -->
+<html>
+    <body>
+    <h1>Vamos a leer al escritor {{ $nombre }}</h1>
+        <h2>Estos son sus últimos artículos:</h2>
+        <ul>
+            @foreach ($articulos as $articulo)
+                <li>{{ $articulo }}</li>
+            @endforeach
+        </ul>
+    </body>
+</html>
+```
+
+En el caso anterior, la vista muestra el valor de la variable nombre e itera por el array articulos, por lo que será necesario proporcionarle dichos datos en la llamada al método view():
+
+```php
+Route::get('/articulos', function () {
+    $articulos = array('Primero', 'Segundo','Tercero', 'Último');
+    return view('articulos', [
+        'nombre' => 'Ane Aranceta',
+        'articulos' => $articulos
+    ]);
+})->name('articulos');
+```
+
+El motor de plantillas Blade permite el uso de todo tipo de estructuras:
+
+```php
+@for ($i = 0; $i < 10; $i++)
+    El valor actual es {{ $i }}
+@endfor
+
+@foreach ($users as $user)
+    <p>El usuario: {{ $user->id }}</p>
+@endforeach
+
+@forelse($users as $user)
+    <li>{{ $user->name }}</li>
+@empty
+    <p>No users</p>
+@endforelse
+
+@while (true)
+    <p>Eso es un bucle infinito.</p>
+@endwhile
+
+@if (count($articulos) === 1)
+    Hay un artículo.
+@elseif (count($articulos) > 1)
+    Hay varios artículos.
+@else
+    No hay ninguno.
+@endif
+
+@unless (Auth::check())
+    No estas autenticado.
+@endunless
+```
+
+Puedes encontrar toda la información acerca de Blade en la documentación oficial.
+
+#### Hands on! (3/7)
+Actualiza las rutas de tu aplicación para que comiencen a devolver vistas al usuario: - /articulos: Devolverá una vista que muestre los artículos en una tabla. La primera columna tendrá un enlace a la ruta del artículo, utilizando su id. La segunda columna contendrá el título del artículo. - articulos/{id}: Devolverá una vista que contenga un párrafo con la siguiente frase: "Gracias por leer el artículo con id {id}". También tendrá un enlace para voler a cargar ruta que muestra todos los arículos.
+
+Solución
+/resources/views/articulos/index.blade.php:
+
+```php
+<html>
+<head>
+    <title>RevistApp</title>
+</head>
+<body>
+    <h1>Revistapp</h1>
+    <h2>Listado artículos:</h2>
+    <table>
+        <tr><th>Enlace</th><th>Título</th></tr>
+        @foreach ($articulos as $articulo)
+        <tr>
+            <td><a href="{{ route('articulos.show', $articulo['id']) }}">Ver</a></td>
+            <td>{{ ($articulo['titulo']) }}</td>
+        </tr>
+        @endforeach
+    </ul>
+</body>
+</html>
+```
+
+/resources/views/articulos/show.blade.php:
+
+```php
+<html>
+<head>
+    <title>RevistApp</title>
+</head>
+<body>
+    <h1>Revistapp</h1>
+    <h2>Detalle del artículo:</h2>
+    <p>Gracias por leer el artículo con id: {{ $id }}</p>
+    <a href="{{ route('articulos.index') }}">Volver</a>
+</body>
+</html>
+```
+
+```php
+// routes/web.php:
+
+Route::get('/articulos', function () {
+    $articulos = [
+        ["id" => 1, "titulo" => "Primer artículo..."],
+        ["id" => 2, "titulo" => "Segundo artículo..."],
+        ["id" => 3, "titulo" => "Tercer artículo..."],
+    ];
+    return view('articulos.index', [
+        'articulos' => $articulos
+    ]);
+})->name('articulos.index');
+
+Route::get('articulos/{id}', function ($id) {
+    return view('articulos.show', [
+        'id' => $id
+    ]);
+})->name('articulos.show');
+```
+
+#### Paso 4 - Crear un Controlador
+Los controladores contienen la lógica para atender las peticiones recibidas. En otras palabras, un Controlador es una clase que agrupa el comportamiento de todas las peticiones relacionadas con una misma entidad. Por ejemplo, el controlador ArticuloController será el encargado de definir el comportamiento de acciones como: creación de un artículo, modificación de un artículo, búsqueda de artículos, etc.
+
+Creando un Controller
+Existen dos formas de crear un controlador:
+
+Crear manualmente una clase que extienda de la clase Controller de Laravel dentro del directorio app/Http/Controllers.
+Utilizar el comando de Artisan make:controller. Artisan es una herramienta que nos provee Laravel para interactuar con la aplicación y ejecutar instrucciones.
+En este caso escogeremos la segunda opción y ejecutaremos el siguiente comando:
 
 ```bash
-cd laravel-12
+php artisan make:controller ArticuloController
 ```
 
-Instalar dependencias de PHP (Composer): Este paso lee el archivo composer.json e instala todos los paquetes necesarios en la carpeta /vendor.
-```bash
-composer install
-```
-Configurar el archivo `.env`:
+De este modo Laravel creará automáticamente un controlador vacío, que vendrá a ser una subclase de la clase Controller:.
 
-Copia el archivo de configuración de ejemplo (a menudo llamado `.env.example`) y nómbralo como `.env`.
-Este archivo debe ser editado con tus credenciales de base de datos locales y otras configuraciones específicas de tu entorno.
-```bash
-cp .env.example .env
-```
+```php
+namespace App\Http\Controllers;
 
-Cabe destacar del archivo .env los datos de conexión a la base de datos, que son esenciales para que la aplicación sepa dónde y cómo almacenar y recuperar información.
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel_12
-DB_USERNAME=root
-DB_PASSWORD=
+use Illuminate\Http\Request;
+
+class ArticuloController extends Controller
+{
+    //
+}
 ```
 
-Generar la Application Key (clave de cifrado): En proyectos Laravel, necesitas generar una clave única para fines de seguridad.
-```bash
-php artisan key:generate
+Como hemos comentado antes los controladores son los responsables de procesar las peticiones entrantes y devolver al cliente la respuesta. Es decir, el router únicamente tendrá que invocar al controlador correspondiente para que atienda la petición entrante.
+
+En el siguiente ejemplo se muestra cómo añadirle métodos que devuelvan vistas (como se puede ver en el caso de la función de nombre show()). Tal y como se puede apreciar, moveremos la lógica de la aplicación del router al controlador.
+
+```php
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\User;
+
+class ArticuloController extends Controller
+{
+    /**
+     * Show the profile for the given user.
+     *
+     * @param  int  $id
+     * @return View
+     */
+    public function show($id)
+    {
+        return view('articulos.show', [
+            'id' => $id
+        ]);
+    }
+}
 ```
-#### 4. Compilación de Archivos Estáticos (Assets)
-Los archivos de código fuente de CSS y JavaScript (como los que se encuentran en la carpeta resources) no se utilizan directamente en producción, sino que deben ser compilados, transpuestos y minimizados para un rendimiento óptimo en el navegador.
 
-Este proceso generalmente se realiza con Node.js y npm (o yarn / pnpm).
-
-Instalar dependencias de Node.js (NPM):
-
-Primero, debes instalar las dependencias de frontend definidas en el archivo package.json (que incluye el compilador, PostCSS, Babel, etc.).
-```bash
-npm install
-```
-
-Compilar los Assets:
-
-Una vez instaladas las dependencias, ejecutas el comando de compilación. Este comando procesa los archivos fuente y genera los archivos estáticos finales (como `app.css` o `app.js`) dentro de carpetas públicas, a menudo `/public/build` o `/public/js`, que se ignoraron inicialmente en el archivo `.gitignore`.
-
-Para una compilación optimizada para producción, usa:
-```bash
-npm run build
-```
-
-#### 5. Ejecución de las Migraciones de la BBDD
-Una vez que has clonado el repositorio, instalado las dependencias y configurado el archivo `.env` con las credenciales de tu base de datos local, el paso final y crucial es crear la estructura de la base de datos definida en el código.
-
-Esto se realiza mediante el comando migrate de Artisan:
-
-Ejecutar las migraciones: Este comando lee los archivos de migración ubicados en la carpeta `database/migrations` y crea las tablas correspondientes en tu base de datos. Con el parámetro `--seed` insertaremos los datos iniciales en esas tabla.
+Es posible añadir más opciones al comando make:controller, aunque el único obligatorio es el nombre del controlador. por ejemplo el flag --resource al comando anterior, Artisan incluirá en el controlador creado los siete métodos REST más comunes: index(), create(), store(), show(), edit(), update(), destroy():
 
 ```bash
-php artisan migrate --seed
+php artisan make:controller ArticuloController --resource
+```
+Cada método tiene su función:
+
+Tipo	URI	Método	Acción
+- GET	/articulos	index	Muestra todos los artículos
+- GET	/articulos/create	create	Muestra el formulario para crear un artículo
+- POST	/articulos	store	Guarda un nuevo artículo a partir de la información recibida
+- GET	/articulos/{id}	show	Muestra la información de un artículo específico
+- GET	/articulos/{id}/edit	edit	Muestra el formulario de edición de un artículo que ya existe
+- PUT/PATCH	/articulos/{id}	update	Guardar los cambios del artículo indicado a partir de la información recibida
+- DELETE	/articulos/{id}	destroy	Elimina el artículo con el ID indicado
+
+Enrutar el Controlador
+El siguiente paso es incluir en el Router las llamadas a los métodos del Controlador. En este caso crearemos las siguientes como ejemplo:
+
+```php
+use App\Http\Controllers\ArticuloController;
+
+Route::get('articulos/', [ArticuloController::class, 'index'])->name('articulos.index');
+Route::get('articulos/{id}', [ArticuloController::class, 'show'])->name('articulos.show');
+Route::get('articulos/create', [ArticuloController::class, 'create'])->name('articulos.create');
+Route::post('articulos/', [ArticuloController::class, 'store'])->name('articulos.store');
 ```
 
-Un seeder es un archivo (o clase) que se utiliza para insertar datos iniciales en las tablas de la base de datos.
-Se ejecutan después de las migraciones para:
-- Crear usuarios por defecto (por ejemplo, un administrador).
-- Añadir configuraciones iniciales.
-- Poblar la base de datos con datos de prueba para el desarrollo.
+De esta forma direccionaremos las peticiones a los métodos de los controladores. Recuerda que el router no debe incluir ninguna lógica de la aplicación, únicamente redireccionar las peticiones a los controladores.
+Existe también otra forma más rápida para generar automáticamente las rutas a todos los métodos de nuestro controlador:
 
-En resumen, un seeder es la herramienta que llena las tablas vacías con información esencial para que la aplicación comience a funcionar.
+```php
+Route::resource('articulos', ArticuloController::class);
+```
 
-#### Resumen
+Si ejecutamos el comando `php artisan route:list` podemos comprobar cómo ya disponemos de todas las rutas a nuestro recurso y que cada una apunta al método correspondiente en el controlador.
 
-- Clonar: `git clone https://github.com/martiniher/laravel-12.git`
-- Moverse: `cd laravel-12`
-- Dependencias PHP: `composer install`
-- Configuración: `cp .env.example .env`
-- Clave: `php artisan key:generate`
-- Dependencias NPM: `npm install`
-- Compilar los Assets `npm run build`
-- Migraciones: `php artisan migrate --seed`
+Esta opción de Route::resource también ofrece la posibilidad de generar únicamente las rutas que le indiquemos. El siguiente ejemplo muestra como generar únicamene las rutas index y create utilizando el método only():
+
+```php
+Route::resource('articulos', ArticuloController::class)->only([
+    'index', 'create'
+]);
+```
+
+#### Hands on! (4/7)
+Crea un controlador llamado ArticuloController.php y mueve la lógica de las dos rutas del router articulos/ y articulos/{id} al nuevo controlador.
+
+Solución
+`/App/Http/Controllers/ArticuloController.php:`
+
+```php
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class ArticuloController extends Controller
+{
+
+    public function index()
+    {
+        $articulos = [
+            ["id" => 1, "titulo" => "Primer artículo..."],
+            ["id" => 2, "titulo" => "Segundo artículo..."],
+            ["id" => 3, "titulo" => "Tercer artículo..."],
+        ];
+        return view('articulos.index', [
+            'articulos' => $articulos
+        ]);
+    }
+
+    public function show($id)
+    {
+        return view('articulos.show', [
+            'id' => $id
+        ]);
+    }
+}
+```
+El router pasará a indicar el controlador y el método que se encargará de cada petición:
+
+```php
+use App\Http\Controllers\ArticuloController;
+
+Route::get('articulos', [ArticuloController::class, 'index'])->name('articulos.index');
+Route::get('articulos/{id}', [ArticuloController::class, 'show'])->name('articulos.show');
+```
+
+### Paso 5 - Crear la Migración (Migration)
+Las Migraciones (Migrations) se utilizan para construir el esquema de la base de datos, es decir, crear y modificar las tablas que utilizará nuestra aplicación. Ejecuta el siguiente comando de Artisan para crear una nueva Migración para una tabla que llamaremos "articulos".
+
+```bash
+php artisan make:migration create_articulos_table --create=articulos
+```
+Laravel creará una nueva migración automáticamente en el directorio database/migrations. El nombre del archivo creado será el indicado en el comando anterior, en este caso create_articulos_table, precedido por un timestamp, por ejemplo: `2022_12_21_162755_create_articulos_table.php`.
+
+El contenido de la clase creada será el siguiente:
+
+```php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('articulos', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('articulos');
+    }
+};
+```
+Tal y como puedes deducir del código anterior, una migración contiene 2 métodos:
+
+`up()`: se utiliza para crear nuevas tablas, columnas o índices a la base de datos.
+`down()`: se utiliza para revertir operaciones realizadas por el método up().
+El siguiente paso es implementar el método up() para que cree las columnas tal y como queremos:
+
+```php
+public function up()
+{
+    Schema::create('articulos', function (Blueprint $table) {
+        // Completar con los campos que queremos que contenta la tabla 'articulos':
+        $table->id(); # Columna de tipo integer autoincremental (equivalente a UNSIGNED INTEGER)
+        $table->string('titulo'); # Columna de tipo string (equivalente a VARCHAR)
+        $table->text('contenido'); # Columna de tipo text (equivalente a TEXT)
+        $table->timestamps(); # Crea las columnas created_at y updated_at de tipo TIMESTAMP.
+    });
+}
+
+/**
+ * Reverse the migrations.
+ *
+ * @return void
+ */
+public function down()
+{
+    Schema::dropIfExists('articulos');
+}
+```
+
+Aparte de `id()`, `string()` o `integer()`, existen una gran variedad de tipos de columnas disponibles para definir las tablas. Puedes encontrarlas en la documentación oficial.
+
+Una vez tenemos definida una migración, solo quedará ejecutarla para que así se ejecute en nuestra base de datos y aplique los cambios indicados. Para ejecutar las migraciones simplemente lanza el comando migrate de Artisan:
+
+```bash
+php artisan migrate
+```
+
+#### Hands on! (5/7)
+Crea una migración para una tabla llamada articulos siguiendo los pasos anteriormente descritos. Completa la función up() para definir la tabla y lanza la migración.
+
+### Paso 7 - Crear un Modelo
+Laravel incluye por defecto Eloquent ORM, el cual hace de la interacción con la base de datos una tarea fácil. Tal y como dice la documentación oficial:
+
+Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
+
+En otras palabras, cada tabla de la base de datos corresponde a un Modelo, el cual permite ejecutar operaciones sobre esa tabla (insertar o leer registros por ejemplo). Este patrón es conocido como Active Record Pattern.
+
+El nombre del modelo será la forma singular del nombre asignado a la tabla de la base de datos. Por ejemplo: User será el modelo correspondiente a la tabla users.
+
+Creando un Modelo
+Vamos a crear un Modelo:
+
+```bash
+php artisan make:model Articulo
+```
+
+El comando anterior ha creado una clase llamada Articulo en el directorio app/Models (es el directorio por defecto para los modelos de Eloquent a partir de Laravel 8).
+
+```
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Articulo extends Model
+{
+    //
+}
+```
+
+Por defecto un modelo de Eloquent almacena los registros en una tabla con el mismo nombre pero en plural. En este caso, Articulo interactuará con la tabla de la base de datos llamada articulos.
+
+Consultando datos de la base de datos
+Los modelos de Eloquent se pueden utilizar para recuperar información de las tablas relacionadas con ese modelo. Proporcionan métodos como los siguientes:
+
+```php
+use App\Models\Articulo;
+
+// Recupera todos los modelos
+$articulos = Articulo::all();
+
+// Recupera un modelo a partir de su clave
+$articulo = Articulo::find(1);
+
+// Recupera el primer modelo que cumpla con los criterios indicados
+$articulos = Articulo::where('active', 1)->first();
+
+// Recupera los modelos que cumplan con los criterios indicados y de la forma indicada:
+$articulos = Articulo::where('active', 1)
+               ->orderBy('titulo', 'desc')
+               ->take(10)
+               ->get();
+```
+Es posible iterar por la colección que devuelven los métodos all(), get() o first() de la siguiente forma:
+
+```php
+foreach ($articulos as $articulo) {
+    echo $articulo->titulo;
+}
+```
+
+Es importante mencionar que los métodos como all() o get no devuelven arrays típicos de PHP si no que devuelven una instancia de la clase Collection de Laravel. La diferencia es que estas colecciones tienen métodos adicionales que pueden ayudarnos en distintas situaciones, como por ejemplo: last(), count(), sort(), merge(), filter(), ... Puedes encontrar la lista de estos métodos de ayuda aquí: https://laravel.com/docs/12.x/collections#available-methods
+
+Insertar información en la base de datos
+El flujo de interacción que seguirá un usuario para insertar nuevos registros (artículos en nuestro caso) será el siguiente: 1. Acceder a la página con el formulario para enviar los datos. La ruta a la que deberá acceder será la siguiente: articulos/create/ 2. Enviar los datos del formulario. La ruta que recibirá los datos será la siguiente: articulos/ (POST). 3. Una vez enviados los datos, si todo ha ido bien nuestra aplicación le mostrará una nueva página.
+
+Por lo tanto, será necesario crear dos nuevas rutas que invoquen a los métodos create() y store() del controlador.
+
+```php
+// /routes/web.php
+use App\Http\Controllers\ArticuloController;
+
+Route::get('articulos', [ArticuloController::class, 'index'])->name('articulos.index');
+Route::get('articulos/create', [ArticuloController::class, 'create'])->name('articulos.create');
+Route::get('articulos/{id}', [ArticuloController::class, 'show'])->name('articulos.show');
+Route::post('articulos/', [ArticuloController::class, 'store'])->name('articulos.store');
+```
+La ruta empleada para mostrar el formulario será de tipo GET y la encargada de almacenar los datos será de tipo POST.
+
+A continuación será necesario implementar los métodos del controlador:
+
+```php
+namespace App\Http\Controllers;
+
+use App\Models\Articulo;
+use Illuminate\Http\Request;
+
+class ArticuloController extends Controller
+{
+
+    public function create()
+    {
+        return view('articulos.create');
+    }
+
+    public function store(Request $request)
+    {
+        //Validar la petición:
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'contenido' =>'required|string'
+        ]);
+        /* Si la validación falla se redirigirá al usuario 
+        a la página previa. Si pasa la validación, el controlador 
+        continuará ejecutándose.
+        */
+
+        // Insertar el artículo en la BBDD tras su validación.
+        Articulo::create($validated);
+
+        return redirect(route('articulos.index'));
+    }
+}
+```
+
+En el método `store()` se ha incluido una validación de los datos. Para conocer más acerca de las validaciones automáticas que Laravel puede hacer por nosotros, puedes visitar este enlace.
+
+Si no se quiere validar los datos (no recomendado) se podría haber creado el nuevo artículo de la siguiente forma:
+
+```php
+    ...
+
+    public function store(Request $request)
+    {
+
+        $articulo = new Articulo;
+        $articulo->titulo = request('titulo');
+        $articulo->contenido = request('contenido');
+        $articulo->save();
+
+        // Otra alternativa para la inserción:
+        $articulo = Articulo::create([
+            'titulo' => request('titulo'),
+            'contenido' => request('contenido')
+         ]);
+
+        return redirect(route('articulos.index'));
+    }
+}
+```
+
+En el ejemplo anterior se puede apreciar que el método request() permite acceder a los datos enviados en la petición.
+
+Por último, quedaría crear la vista que muestre el formulario:
+
+`/resources/views/articulos/create.blade.php`:
+
+```php
+<html>
+<head>
+    <title>RevistApp</title>
+</head>
+<body>
+    <h1>Revistapp</h1>
+    <h2>Crear un artículo:</h2>
+
+    <form method="POST" action="{{ route('articulos.store') }}">
+        @csrf
+        <p><label>Titulo: </label><input type="text" name="titulo"></p>
+        <p><label>Contenido: </label><input type="text" name="contenido"></p>
+        <button type="submit">Crear</button>
+    </form>
+    <a href="{{ route('articulos.index') }}">Volver</a>
+</body>
+</html>
+```
+La directiva @csrf agrega un campo oculto con el Token de usuario para que Laravel nos proteja automáticamente de ataques XSS o de suplantación de identidad. Es necesario agregar siempre esta directiva.
+Valores por defecto de un modelo
+Al crear una instancia nueva de un modelo, los atributos de la instancia no tendrán ningún valor establecido. Si queremos definir valores por defecto, es posible hacerlo de la siguiente forma:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Articulo extends Model
+{
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'publicado' => false,
+    ];
+}
+```
+
+El ejemplo anterior muestra cómo establecer el atributo publicado como false cada vez que creemos un nuevo objeto de la clase Articulo.
+
+Alternativas a Eloquent ORM
+Laravel también permite interactuar con la base de datos mediante otras técnicas distintas a Eloquent ORM. Las alternativas disponibles son:
+
+- Raw SQL: se trata de ejecutar sentencias SQL directamente contra la base de datos. Tienes toda la información disponible aquí.
+- Query Builder: es una interfaz de comunicación con la base de datos que permite lanzar prácticamente cualquier consulta. A diferencia de la anterior, no es tan eficiente en cuanto a rendimiento pero aporta otras ventajas como la seguridad y abstracción de base de datos. Tienes toda la información disponible aquí.
 
 
+#### Hands on! (6/7)
+Crea una vista para crear nuevos artículos y los métodos create() y store() en los controladores. De esta forma tu aplicación ya podrá crear artículos sin problemas. Tienes las soluciones en los códigos proporcionados junto con la explicación.
 
+#### Hands on! (7/7)
+Actualiza el método index() para que utilice los datos almacenados en la base de datos. Puedes utilizar el método all() para recoger todos los artículos de la base de datos.
+Actualiza el método show() para que muestre el título y el contenido del artículo seleccionado.
+Añade también en la página incial un enlace a la página de creación de artículos.
+Solución
+/App/Http/Controllers/ArticuloController.php:
 
+```php
+namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Articulo;
 
+class ArticuloController extends Controller
+{
 
+    public function index()
+    {
+        $articulos = Articulo::all();
+        return view('articulos.index', [
+            'articulos' => $articulos
+        ]);
+    }
 
+    public function show($id)
+    {
+        $articulo = Articulo::find($id);
+        return view('articulos.show', [
+            'articulo' => $articulo
+        ]);
+    }
+
+    ...
+}
+```
+
+Actualiza la vista index.blade.php para que utilice los datos correctamente y muestre el nuevo enlace:
+
+```php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RevistApp</title>
+</head>
+<body>
+    <h1>Revistapp</h1>
+    <h2>Listado artículos:</h2>
+    <a href="{{ route('articulos.create') }}">Crear nuevo</a>
+    <table>
+        <tr><th>Enlace</th><th>Título</th></tr>
+        @foreach ($articulos as $articulo)
+        <tr>
+            <td><a href="{{ route('articulos.show', $articulo->id) }}">Ver</a></td>
+            <td>{{ ($articulo->titulo) }}</td>
+        </tr>
+        @endforeach
+    </ul>
+</body>
+</html>
+```
+Actualiza la vista `show.blade.php` para que utilice los datos reales del artículo seleccionado:
+
+```php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RevistApp</title>
+</head>
+<body>
+    <h1>Revistapp</h1>
+    <h2>Detalle del artículo:</h2>
+    <p>Titulo: {{ $articulo->titulo }}</p>
+    <p>Contenido: {{ $articulo->contenido }}</p>
+    <a href="{{ route('articulos.index') }}">Volver</a>
+</body>
+</html>
+```
+
+### Borrado de registros
+El borrado de registros es un tema que suele traer complicaciones, debido a que desde una página HTML solo es posible enviar peticiones GET y POST (desde formularios). Por lo tanto, las alternativas son las siguientes:
+
+Crear una ruta de tipo GET específica para el borrado. Por ejemplo: `/articulos/destroy/{id}`
+Hacer la petición de tipo DELETE utilizando AJAX y especificando en la llamada el tipo de método: `'type': 'DELETE'`
+Emular la llamada DELETE mediante el campo oculto _method. Para ello podemos utilizar los helpers o directivas de Laravel en un formulario para notificar que se trata de una petición de tipo DELETE:
+
+```php
+<form method="POST">
+     @csrf
+     @method("DELETE")
+
+     <button type="submit">Eliminar</button>
+</form>
+```
+Siguiendo con la última de las opciones, quedaría añadir la ruta de borrado al router e implementar el método `destroy()` del controlador:
+
+```php
+// Nueva ruta en /router/web.php:
+Route::delete('/articulos/{articulo}', [ArticuloController::class, 'destroy'])->name('articulos.destroy');
+
+// Método destroy() en ArticuloContoller:
+public function destroy(Articulo $articulo)
+{
+    $articulo->delete();
+    return redirect(route('articulos.index'));
+}
+```
+
+El borrado de un modelo se puede hacer de forma sencilla invocando al método `delete()` del modelo.
+
+#### Hands on!
+Añade la opción de eliminar cualquier artículo de la aplicación.
+
+### Actualizar un modelo
+Al igual que ocurre con la creación de un nuevo modelo, para actualizar un modelo los pasos a seguir son los siguientes:
+
+Crear una vista que contenga el formulario de actualización. La ruta en este caso será `/articulos/{articulo}/edit`.
+Crear dos rutas que llamen a los métodos **edit()** y **update()** del controlador: el método **edit()** será el encargado de cargar la vista de actualización (creada en el punto anterior) y el método **update()** recibirá los datos del formulario enviados por el usuario y actualizará el modelo en la base de datos.
+Solución
+Nueva vista `/resources/views/articulos/edit.blade.php`:
+
+```php
+<html>
+<head>
+    <title>RevistApp</title>
+</head>
+<body>
+    <h1>Revistapp</h1>
+    <h2>Crear un artículo:</h2>
+
+    <form method="POST" action="{{ route('articulos.update', $articulo) }}">
+        @csrf
+        @method('PUT')
+        <p><label>Titulo: </label><input type="text" name="titulo" value="{{ $articulo->titulo }}"></p>
+        <p><label>Contenido: </label><input type="text" name="contenido" value="{{ $articulo->contenido }}"></p>
+        <button type="submit">Crear</button>
+    </form>
+    <a href="{{ route('articulos.index') }}">Volver</a>
+
+</body>
+</html>
+```
+En el código anterior puede verse cómo se han asignado los valores actuales a los atributos value de cada campo. Se ha utilizado la directiva **@method('PUT')** de Laravel para indicar que el método de envío será de tipo **PUT**.
+Nuevas rutas añadidas a `/routes/web.php`:
+
+```php
+Route::get('/articulos/{articulo}/edit', [ArticuloController::class, 'edit'])->name('articulos.edit');
+Route::put('/articulos/{articulo}', [ArticuloController::class, 'update'])->name('articulos.update');
+```
+En cuanto a los métodos de `ArticuloController.php`, se utilizará el método `update()` para actualizar el modelo:
+
+```php
+public function edit(Articulo $articulo)
+{
+    return view('articulos.edit', [
+        'articulo' => $articulo
+    ]);
+}
+
+public function update(Request $request, Articulo $articulo)
+{
+    $validated = $request->validate([
+        'titulo' => 'required|string|max:255',
+        'contenido' =>'required|string'
+    ]);
+    $articulo->update($validated);
+    return redirect(route('articulos.show', $articulo));
+}
+```
+### Validación de formularios
+Realizar la validación de los campos del formulario
+Laravel permite validar cualquier campo enviado por un formulario mediante el método validate. Tal y como ya habíamos hecho anteriormente:
+
+```php
+public function store(Request $request)
+{
+    //Validar la petición:
+    $validated = $request->validate([
+        'titulo' => 'required|string|max:255',
+        'contenido' =>'required|string'
+    ]);
+
+    Articulo::create($validated);
+
+    return redirect(route('articulos.index'));
+}
+```
+
+Si la validación pasa correctamente el código seguirá ejecutándose de forma normal y corriente. Pero si la validación falla, se redirigirá al usuario a la página desde la que se ha realizado el envío del formulario.
+
+Puedes ver todas las reglas de validación disponibles aquí.
+
+Mostrar los errores en la vista
+Todas las vistas de Laravel tienen disponible la variable llamada $errors. En el siguiente ejemplo puede verse cómo mostrar al usuario todos los errores detectados en la validación:
+
+```php
+<h1>Crear artículo</h1>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+```
+
+#### Directiva @error
+La directiva **@error** permite comprobar si un campo concreto ha tenido algún error, y en caso afirmativo mostrar el mensaje de error de dicho campo. Se utilizará de la siguiente manera:
+
+```php
+<p>
+    <label>Titulo: </label>
+    <input type="text" name="titulo">
+    @error('titulo')
+    <small style="color:red;">{{ $message }}</small>
+    @enderror
+</p>
+<p>
+    <label>Titulo: </label>
+    <input type="text" name="contenido">
+    @error('contenido')
+    <small style="color:red;">{{ $message }}</small>
+    @enderror
+</p>
+```
+
+En caso de error se mostrará el contenido indicado entre las etiquetas @error y @enderror. Además la variable $message estará disponible entre dichas etiquetas e incluirá el mensaje de error.
