@@ -1,134 +1,166 @@
-### 1. Primer modelo
-Creamos el primero modelo
+
+#### 1.- Crear una nueva migración
 
 ```bash
-php artisan make:model Empleado
+php artisan make:migration create_empleados_table
 ```
-
-El modelo se creara en `app\Models\Empleado.php`
-
-### 2. Creamos la tabla en la BBDD y datos de ejemplo
-
-```sql
-CREATE TABLE empleados (
-    id_empleado INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
-    apellidos VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    dni VARCHAR(15) UNIQUE NOT NULL,
-    sexo CHAR(1),
-    edad TINYINT,
-    fecha_nacimiento DATE,
-    curriculum VARCHAR(255)
-);
-
-
-INSERT INTO empleados (nombre, apellidos, email, dni, sexo, edad, fecha_nacimiento, curriculum)
-VALUES ('Ana', 'García Pérez', 'ana.garcia@empresa.com', '12345678A', 'F', 35, '1990-05-15', 'Líder de proyecto con 10 años de experiencia en desarrollo Java.');
-
-INSERT INTO empleados (nombre, apellidos, email, dni, sexo, edad, fecha_nacimiento, curriculum)
-VALUES ('Javier', 'López Ruiz', 'javier.lopez@empresa.com', '87654321B', 'M', 24, '2001-08-20', 'Desarrollador Junior enfocado en front-end y metodologías ágiles.');
-
-INSERT INTO empleados (nombre, apellidos, email, dni, sexo, edad, fecha_nacimiento, curriculum)
-VALUES ('Marta', 'Torres Sánchez', 'marta.torres@empresa.com', '11223344C', 'F', 42, '1983-02-10', 'Especialista en RRHH y gestión de talento.');
-
-```
-
-### 3. Modificamos la ruta
-
+Editamos el archivo:
 ```php
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Http\Controllers\EmpleadoController;
-
-Route::get('/empleados', [EmpleadoController::class, 'index']);
-
-```
-
-### 4. Modificamos la ruta
-
-Modificamos el controlador
-
-```php
-<?php
-namespace App\Http\Controllers;
-
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-
-class EmpleadoController extends Controller
+return new class extends Migration
 {
     /**
-     * Muestra una lista de todos los empleados.
+     * Run the migrations.
      */
-    public function index()
+    public function up(): void
     {
-        // 1. Obtener todos los empleados de la base de datos
-        // El método all() devuelve una "Collection" (Colección) de modelos Empleado.
-        $empleados = Empleado::all();
+        /*
+        CREATE TABLE empleados (
+            id_empleado INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            nombre VARCHAR(50) NOT NULL,
+            apellidos VARCHAR(100) NOT NULL,
+            email VARCHAR(100) UNIQUE,
+            dni VARCHAR(15) UNIQUE NOT NULL,
+            sexo CHAR(1),
+            edad TINYINT,
+            fecha_nacimiento DATE,
+            curriculum VARCHAR(255)
+        );
+        */
 
-        // 2. Devolver la vista, pasando la colección de empleados.
-        return view('empleados.index', [
-            // Ahora pasamos la variable $empleados a la vista con el mismo nombre.
-            'empleados' => $empleados
+        Schema::create('empleados', function (Blueprint $table) {
+
+            $table->id('id_empleado'); // Esto crea un campo BigInt, UNSIGNED, AUTO_INCREMENT, PRIMARY KEY.
+
+            // Campos de texto obligatorios
+            $table->string('nombre', 50)->nullable(false); // VARCHAR(50) NOT NULL
+            $table->string('apellidos', 100)->nullable(false); // VARCHAR(100) NOT NULL
+
+            // Campos de texto únicos y obligatorios
+            $table->string('email', 100)->unique()->nullable(); // VARCHAR(100) UNIQUE (Permite NULL, si quieres que sea NOT NULL, quita ->nullable())
+            $table->string('dni', 15)->unique()->nullable(false); // VARCHAR(15) UNIQUE NOT NULL
+
+            // Campos opcionales
+            $table->char('sexo', 1)->nullable(); // CHAR(1)
+            $table->tinyInteger('edad')->nullable(); // TINYINT
+
+            // Campo de fecha
+            $table->date('fecha_nacimiento')->nullable(); // DATE
+
+            // Campo de texto largo/ruta
+            $table->string('curriculum', 255)->nullable(); // VARCHAR(255)
+
+            // Laravel usa created_at y updated_at por defecto. Si no los necesitas, puedes quitarlos.
+            $table->timestamps(); 
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('empleados');
+    }
+};
+```
+#### 2.- Creamos una nuevo archivo de semillas
+```bash
+    php artisan make:seeder EmpleadosSeeder
+```
+Editamos el archivo
+```php
+<?php
+// database\seeders\EmpleadosSeeder.php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class EmpleadosSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        /*
+        INSERT INTO empleados (nombre, apellidos, email, dni, sexo, edad, fecha_nacimiento, curriculum)
+        VALUES ('Ana', 'García Pérez', 'ana.garcia@empresa.com', '12345678A', 'F', 35, '1990-05-15', 'Líder de proyecto con 10 años de experiencia en desarrollo Java.');
+
+        INSERT INTO empleados (nombre, apellidos, email, dni, sexo, edad, fecha_nacimiento, curriculum)
+        VALUES ('Javier', 'López Ruiz', 'javier.lopez@empresa.com', '87654321B', 'M', 24, '2001-08-20', 'Desarrollador Junior enfocado en front-end y metodologías ágiles.');
+
+        INSERT INTO empleados (nombre, apellidos, email, dni, sexo, edad, fecha_nacimiento, curriculum)
+        VALUES ('Marta', 'Torres Sánchez', 'marta.torres@empresa.com', '11223344C', 'F', 42, '1983-02-10', 'Especialista en RRHH y gestión de talento.');
+        */
+        DB::table('empleados')->insert([
+            // Primer registro
+            [
+                'nombre' => 'Ana',
+                'apellidos' => 'García Pérez',
+                'email' => 'ana.garcia@empresa.com',
+                'dni' => '12345678A',
+                'sexo' => 'F',
+                'edad' => 35,
+                'fecha_nacimiento' => '1990-05-15',
+                'curriculum' => 'Líder de proyecto con 10 años de experiencia en desarrollo Java.'
+            ],
+            // Segundo registro
+            [
+                'nombre' => 'Javier',
+                'apellidos' => 'López Ruiz',
+                'email' => 'javier.lopez@empresa.com',
+                'dni' => '87654321B',
+                'sexo' => 'M',
+                'edad' => 24,
+                'fecha_nacimiento' => '2001-08-20',
+                'curriculum' => 'Desarrollador Junior enfocado en front-end y metodologías ágiles.'
+            ],
+            // Tercer registro
+            [
+                'nombre' => 'Marta',
+                'apellidos' => 'Torres Sánchez',
+                'email' => 'marta.torres@empresa.com',
+                'dni' => '11223344C',
+                'sexo' => 'F',
+                'edad' => 42,
+                'fecha_nacimiento' => '1983-02-10',
+                'curriculum' => 'Especialista en RRHH y gestión de talento.'
+            ],
         ]);
     }
 }
 ```
 
-### 5. Modificamos la vista
-```blade
-@if($empleados->isEmpty())
-    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg shadow-md">
-        <p class="font-bold">Información:</p>
-        <p>No se encontraron empleados registrados en la base de datos.</p>
-    </div>
-@else
-    <div class="shadow-lg overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-indigo-600 text-white">
-                <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                        ID
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                        Nombre Completo
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                        Email
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                        Edad
-                    </th>
-                    <th scope="col" class="relative px-6 py-3">
-                        <span class="sr-only">Acciones</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($empleados as $empleado)
-                    <tr class="hover:bg-indigo-50 transition duration-150 ease-in-out">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {{ $empleado->id_empleado }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                            {{ $empleado->nombre }} {{ $empleado->apellidos }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                            {{ $empleado->email }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ $empleado->edad }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900 transition duration-150">Ver Detalle</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-@endif
+
+#### 3.- Añadimor el archivo 
+
+Para que funcione automáticamente tenemos que añadirlo al final del método `run`.
+```php
+// database/seeders/DatabaseSeeder.php
+
+public function run(): void
+{
+    //...Otro código
+
+    $this->call([
+        EmpleadosSeeder::class, // <-- Añadir esta línea
+        // Otros seeders si los tienes
+    ]);
+}
+```
+
+####4. Ejecución (Paso Final)
+Solo faltaría añadir el comando final para ejecutar ambos procesos (Migración y Seeder):
+
+4.1.- Ejecución de Migración y Semillas 🚀
+```Bash
+php artisan migrate --seed
 ```
