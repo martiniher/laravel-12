@@ -2,7 +2,7 @@ Original:
 [https://laravel9.netlify.app/04-nivel-intermedio/](https://laravel9.netlify.app/04-nivel-intermedio/)
 
 ### 1.- Crear un Router
-Las rutas son los puntos de entrada a nuestra aplicación. Cada vez que un usuario hace una petición a una de las rutas de la aplicación, Laravel trata la petición mediante un Router definido en el directorio routes, el cual será el encargado de direccionar la petición a un Controlador. Las rutas accesibles para navegadores estarán definidas en el archivo routes/web.php y aquellas accesibles para servicios web (webservices) estarán definidas en el archivo routes/api.php. A continuación se muestra un ejemplo:
+Las rutas son los puntos de entrada a nuestra aplicación. Cada vez que un usuario hace una petición a una de las rutas de la aplicación, Laravel trata la petición mediante un Router definido en el directorio routes, el cual será el encargado de direccionar la petición a un Controlador. Las rutas accesibles para navegadores estarán definidas en el archivo `routes/web.php` y aquellas accesibles para servicios web (webservices) estarán definidas en el archivo `routes/api.php´. A continuación se muestra un ejemplo:
 
 ```php
 Route::get('/articulos', function () {
@@ -10,7 +10,7 @@ Route::get('/articulos', function () {
 });
 ```
 
-El código anterior muestra cómo se define una ruta básica. En este caso, cuando el usuario realice una petición sobre /articulos, nuestra aplicación ejecutará la función anónima definida. En este caso enviará una respuesta al usuario con el string '¡Vamos a leer unos articulos!'.
+El código anterior muestra cómo se define una ruta básica. En este caso, cuando el usuario realice una petición sobre `/articulos`, nuestra aplicación ejecutará la función anónima definida. En este caso enviará una respuesta al usuario con el string '¡Vamos a leer unos articulos!'.
 
 Podemos especificar tantas rutas como queramos:
 
@@ -94,7 +94,7 @@ Route::get('articulos/{id?}', function ($id = 0) {
 ```
 
 Acceder a la información de la petición
-También es posible acceder a la información enviada en la petición mediante el método request(). Por ejemplo, el siguiente código devolverá el valor enviado para el parámetro 'fecha' de la URL /articulos?fecha=hoy:
+También es posible acceder a la información enviada en la petición mediante el método request(). Por ejemplo, el siguiente código devolverá el valor enviado para el parámetro **'fecha'** de la URL `/articulos?fecha=hoy`:
 
 ```php
 Route::get('/articulos', function () {
@@ -125,7 +125,7 @@ utilizaremos:
 ```
 
 #### Hands on! (2/7)
-Añade a tu aplicación revistapp dos nuevas rutas. - articulos/: Devolverá un array de artículos en formato JSON. Asigna el nombre articulos.index a la ruta utilizando la función name(). - articulos/{id}: Devolverá la siguiente frase: "Gracias por leer el artículo con id: {id}". Asigna el nombre articulos.show a la ruta utilizando la función name().
+Añade a tu aplicación revistapp dos nuevas rutas. - `articulos/`: Devolverá un array de artículos en formato JSON. Asigna el nombre `articulos.index` a la ruta utilizando la función **name()**. - `articulos/{id}`: Devolverá la siguiente frase: "Gracias por leer el artículo con id: {id}". Asigna el nombre `articulos.show` a la ruta utilizando la función **name()**.
 
 Solución
 
@@ -147,7 +147,7 @@ Route::get('articulos/{id}', function ($id) {
 
 ### Paso 2 - Crear una vista
 Definiendo una vista sencilla
-Las vistas son plantillas que contienen el HTML que enviará nuestra aplicación a los usuarios. Se almacenan en el directorio /resources/views de nuestro proyecto.
+Las vistas son plantillas que contienen el HTML que enviará nuestra aplicación a los usuarios. Se almacenan en el directorio `/resources/views` de nuestro proyecto.
 
 ```html
 <!-- vista almacenada en /resources/views/articulos.blade.php -->
@@ -158,7 +158,7 @@ Las vistas son plantillas que contienen el HTML que enviará nuestra aplicación
 </html>
 ```
 
-Tendrán la extensión .blade.php ya que Laravel utiliza el motor de plantillas Blade, como veremos más adelante.
+Tendrán la extensión `.blade.php` ya que Laravel utiliza el **motor de plantillas Blade**, como veremos más adelante.
 
 Devolver una vista
 Cargar y devolver una vista al usuario es tan sencillo como utilizar la función global (helper) view():
@@ -169,7 +169,7 @@ Route::get('/articulos', function () {
 })->name('articulos');
 ```
 
-Al indicarle el nombre de la vista como parámetro no es necesario indicar la ruta completa de la vista ni la extensión .blade.php. Laravel asume que las vistas estarán en la carpeta /resources/views y que tendrán la extensión .blade.php.
+Al indicarle el nombre de la vista como parámetro no es necesario indicar la ruta completa de la vista ni la extensión .blade.php. Laravel asume que las vistas estarán en la carpeta `/resources/views` y que tendrán la extensión `.blade.php`.
 Acceder a datos desde la vista
 Laravel utiliza el motor de plantillas Blade por defecto. Un motor de plantillas permite crear vistas empleando código HTML junto con código específico del motor empleado. De esta forma podremos mostrar información almacenada en variables, crear condiciones if/else, estructuras repetitivas, etc.
 
@@ -187,10 +187,9 @@ En Blade mostrar datos almacenados en variables es muy sencillo:
 
 Tal y como se puede ver en el ejemplo anterior, basta con escribir el nombre de la variable entre llaves {{ }}. Es una buena práctica evitar mezclar el código PHP con nuestras vistas, por lo que toda la información que necesitemos en las vistas la ubicaremos fuera de ellas. Existen distintas formas de pasarle variables a las vistas:
 
-La primera opción sería utilizando el método with(), pasándole como parámetros el nombre de la variable y su valor:
+La primera opción sería utilizando el método **with()**, pasándole como parámetros el nombre de la variable y su valor:
 
 ```php
-
 Route::get('/', function () {
     $nombre = "Nora";
     return view('saludo')->with('nombre', $nombre);
@@ -200,7 +199,6 @@ Route::get('/', function () {
 Otra forma sería enviándolo como array:
 
 ```php
-
 Route::get('/', function () {
     $nombre = "Nora";
     return view('saludo')->with(['nombre' => $nombre]);
@@ -208,7 +206,6 @@ Route::get('/', function () {
 ```
 También podríamos pasar el array como segundo parámetro de la función view() y no utilizar with():
 ```php
-
 Route::get('/', function () {
     $nombre = "Nora";
     return view('saludo',['nombre' => $nombre]);
