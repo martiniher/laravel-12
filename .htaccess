@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_env.c>
+        SetEnv HW_REWRITE On
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirige todos los requerimientos que no son archivos o directorios reales a index.php.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
