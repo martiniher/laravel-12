@@ -27,12 +27,12 @@ class AddressController extends Controller
             //return response()->json($validator->messages(), 400);
             return response()->json(['error' => $validator->errors()], 401);
         }
-        $user = Address::create([
+        $address = Address::create([
             'user_id' => $request->get('user_id'),
             'country' => $request->get('country'),
             'zipcode' => $request->get('zipcode'),
         ]);
-        return response()->json(['message'=>'Address Created','data'=>$user],200);
+        return response()->json(['message'=>'Address Created','data'=>$address],200);
     }
 
     public function show(Address $address): JsonResponse

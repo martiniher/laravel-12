@@ -49,4 +49,9 @@ class User extends Authenticatable
     public function address(){
         return $this->hasOne('App\Models\Address');
     }
+
+    public function events()
+    {
+        return $this->belongsToMany('App\Models\Event')->withPivot('note')->withTimestamps();
+    }
 }
