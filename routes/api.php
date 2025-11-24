@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventTypeController;
 
 Route::controller(UserController::class)->group(function(){
     Route::post('register', 'register');
@@ -32,4 +33,9 @@ Route::controller(AddressController::class)->group(function() {
 Route::controller(EventController::class)->group(function() {
     Route::post('event', 'store');
     Route::get('event/{event}/users', 'listUsers');
+});
+
+Route::controller(EventTypeController::class)->group(function() {
+    Route::get('types', 'listTypes');
+    Route::post('type', 'store');
 });
