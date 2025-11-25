@@ -1,0 +1,34 @@
+/* ----------------------------------------------------
+   resources/css/admin.css
+   Estilos específicos para el panel de administración
+   ---------------------------------------------------- */
+
+/* El fondo del panel de administración es más oscuro para diferenciarlo */
+body {
+    background-color: #1e293b; /* Gris oscuro / Azul petróleo */
+    color: #e2e8f0; /* Texto claro */
+    font-family: 'Georgia', serif; /* Una fuente diferente para el admin */
+}
+
+h1 {
+    color: #f6ad55; /* Un color naranja para encabezados */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #f6ad55;
+    padding-bottom: 10px;
+}
+
+.admin-panel {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #334155; /* Fondo del contenedor oscuro */
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+.alert-info {
+    padding: 15px;
+    border-left: 5px solid #63b3ed; /* Borde azul */
+    background-color: #27303e;
+    margin-top: 20px;
+}
