@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Middleware\EnsureAgeIsOverEighteen;
 
 // ... Rutas de login que ya tenías
 Route::get('/', [LoginController::class, 'create'])->name('login');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/login', [LoginController::class, 'authenticate'])->middleware(EnsureAgeIsOverEighteen::class)->name('login.authenticate');
 
 
 // Dashboard: Protegido por el middleware 'auth'
