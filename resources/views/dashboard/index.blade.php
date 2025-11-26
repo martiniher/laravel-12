@@ -11,6 +11,7 @@
     @if ($user)
         <p>Estás conectado como: <strong>{{ $user->name ?? 'Usuario' }}</strong></p>
         <p>Tu correo electrónico es: <strong>{{ $user->email }}</strong></p>
+        <a href="{{ route('profile.index') }}">ver  Profile </a>
     @else
         <p>No se pudo cargar la información del usuario.</p>
     @endif

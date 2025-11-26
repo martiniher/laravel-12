@@ -1,26 +1,28 @@
+```php
+// app\Providers\AppServiceProvider.php
+
+use Illuminate\Support\Facades\Gate;
+
+public function boot(): void
+{
+    // ...
+    // Define un Gate llamado 'view-profile'
+    Gate::define('view-profile', function ($user) {
+        // En este caso simple, solo verifica si el usuario existe (está logueado).
+        // En casos reales, podrías poner lógica más compleja aquí (ej: $user->isAdmin).
+        return (bool) $user;
+    });
+}
+```
+creamos una nueva migracion
 ```bash
-php artisan make:controller LoginController
+php artisan make:migration add_is_admin_to_users_table --table=users
+```
+Actualizamos la base de datos
+```bash
+php artisan migrate
 ```
 
-- Crea la carpeta 'auth' dentro de 'resources/views'
 ```bash
-mkdir -p resources/views/auth
-```
-
-- Crea el archivo 'login.blade.php' dentro de esa carpeta
-```bash
-touch resources/views/auth/login.blade.php
-```
-```bash
-php artisan make:controller DashboardController
-```
-
-- Crea la carpeta 'auth' dentro de 'resources/views'
-```bash
-mkdir -p resources/views/dashboard
-```
-
-- Crea el archivo 'index.blade.php' dentro de esa carpeta
-```bash
-touch resources/views/dashboard/index.blade.php
+php artisan make:controller ProfileController
 ```

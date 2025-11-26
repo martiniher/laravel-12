@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 // ... Rutas de login que ya tenías
 Route::get('/', [LoginController::class, 'create'])->name('login');
@@ -19,3 +20,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 // Logout: Ruta que acepta una solicitud POST para cerrar sesión
 Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
+
+Route::get('/profile', [ProfileController::class, 'index'])
+    ->middleware('auth') // Buena práctica de protección básica
+    ->name('profile.index');
