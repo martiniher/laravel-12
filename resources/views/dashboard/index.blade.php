@@ -7,7 +7,15 @@
 </head>
 <body>
     <h1>¡Bienvenido a tu Dashboard!</h1>
-
+    @auth
+        <p>Estás conectado como: <strong>{{ $user->name ?? 'Usuario' }}</strong></p>
+        <p>Tu correo electrónico es: <strong>{{ $user->email }}</strong></p>
+    @endauth
+    
+    @guest
+        <p>No se pudo cargar la información del usuario.</p>
+    @endguest
+    
     @if ($user)
         <p>Estás conectado como: <strong>{{ $user->name ?? 'Usuario' }}</strong></p>
         <p>Tu correo electrónico es: <strong>{{ $user->email }}</strong></p>
