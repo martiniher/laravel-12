@@ -23,4 +23,5 @@ Route::post('/logout', [DashboardController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [ProfileController::class, 'index'])
     ->middleware('auth') // Buena práctica de protección básica
+    // ->middleware('can:view-profile') // Si queremos usar el gate en un middleware
     ->name('profile.index');

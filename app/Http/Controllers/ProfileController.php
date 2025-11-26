@@ -16,7 +16,7 @@ class ProfileController extends Controller
     {
         // 1. Usar el Gate para verificar el acceso.
         // Si el Gate 'view-profile' devuelve false, lanzará un error 403 (Unauthorized).
-        Gate::authorize('view-profile');
+        //  Gate::authorize('view-profile');
 
         // 2. Si pasa el Gate, carga la vista.
         $user = Auth::user();

@@ -7,21 +7,29 @@
 </head>
 <body>
     <h1>Perfil de Usuario</h1>
+    @can('view-profile')
 
-    @if (Auth::user())
-        <p><strong>Nombre:</strong> {{ Auth::user()->name }}</p>
-        <p><strong>Correo Electrónico:</strong> {{ Auth::user()->email }}</p>
+        @if (Auth::user())
+            <p><strong>Nombre:</strong> {{ Auth::user()->name }}</p>
+            <p><strong>Correo Electrónico:</strong> {{ Auth::user()->email }}</p>
+        @else
+            <p>AUTH FAIL EN LA VIEW: No se ha podido cargar la información del usuario.</p>
+        @endif
+
+        <hr>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit">
+                Cerrar Sesión
+            </button>
+        </form>
+
     @else
-        <p>Error: No se ha podido cargar la información del usuario.</p>
-    @endif
-
+        <p>GATE BLOCK EN LA VIEW: No se ha podido cargar la información del usuario.</p>
+    @endcan
+    
     <hr>
-
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit">
-            Cerrar Sesión
-        </button>
-    </form>
+    <a href="{{route('dashboard')}}">volver dashboard</a>
 </body>
 </html>
