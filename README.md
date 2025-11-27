@@ -361,6 +361,119 @@ En resumen, un seeder es la herramienta que llena las tablas vacías con informa
   
 [Puesta en marcha del proyecto usando git](https://youtu.be/YNecIEK3utM)
 
+# Las relaciones en Eloquent ORM
+
+[https://laravel.com/docs/12.x/eloquent-relationships](https://laravel.com/docs/12.x/eloquent-relationships)
+
+
+## one-to-one
+
+[Documentación](https://laravel.com/docs/12.x/eloquent-relationships#one-to-one)
+
+Ejemplo:
+ - 1 usuario tiene 1 teléfono. 
+ - 1 teléfono es de un usuario.
+
+Normal
+```php
+    // app\Models\User.php
+    //...
+    public function phone(): HasOne
+    {
+        return $this->hasOne(Phone::class);
+    }
+```
+
+Inversa
+```php
+    // app\Models\Phone.php
+    //...
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+```
+
+[Rama](https://github.com/martiniher/laravel-12/tree/one-to-one)
+
+## many-to-many
+
+[Documentación](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many)
+
+Ejemplo:
+ - 1 usuario puede tener N roles. 
+ - 1 rol puede estar en N usuarios.
+
+Normal
+```php
+    // app\Models\User.php
+    //...
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+```
+
+Inversa
+```php
+    // app\Models\Role.php
+    //...
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+```
+
+[Rama](https://github.com/martiniher/laravel-12/tree/many-to-many)
+
+## one-to-many
+
+[Documentación](https://laravel.com/docs/12.x/eloquent-relationships#one-to-many)
+
+Ejemplo:
+ - 1 publicación puede tener N comentarios. 
+ - 1 comentario puede estar en 1 publicación.
+
+Normal
+```php
+    // app\Models\Post.php
+    //...
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+```
+
+Inversa
+```php
+    // app\Models\Comment.php
+    //...
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Post::class);
+    }
+```
+
+[Rama](https://github.com/martiniher/laravel-12/tree/one-to-many)
+
+# Autenticación
+
+## auth-basica
+
+[auth-basica](https://github.com/martiniher/laravel-12/tree/auth-basica)
+
+# Autorización
+
+## gate-basica
+
+[gate-basica](https://github.com/martiniher/laravel-12/tree/gate-basica)
+
+
+# Middleware
+
+## middleware-basic
+
+[middleware-basic](https://github.com/martiniher/laravel-12/tree/middleware-basico)
 
 
 
