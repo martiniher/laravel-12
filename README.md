@@ -377,6 +377,8 @@ Ejemplo:
 Normal
 ```php
     // app\Models\User.php
+    use Illuminate\Database\Eloquent\Relations\HasOne;
+
     //...
     public function phone(): HasOne
     {
@@ -387,6 +389,8 @@ Normal
 Inversa
 ```php
     // app\Models\Phone.php
+    use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
     //...
     public function user(): BelongsTo
     {
@@ -407,6 +411,8 @@ Ejemplo:
 Normal
 ```php
     // app\Models\User.php
+    use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
     //...
     public function roles(): BelongsToMany
     {
@@ -417,6 +423,8 @@ Normal
 Inversa
 ```php
     // app\Models\Role.php
+    use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
     //...
     public function users(): BelongsToMany
     {
@@ -437,6 +445,8 @@ Ejemplo:
 Normal
 ```php
     // app\Models\Post.php
+    use Illuminate\Database\Eloquent\Relations\HasMany;
+
     //...
     public function comments(): HasMany
     {
@@ -447,6 +457,8 @@ Normal
 Inversa
 ```php
     // app\Models\Comment.php
+    use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
     //...
     public function post(): BelongsTo
     {
