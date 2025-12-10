@@ -498,7 +498,7 @@ public function boot(): void
 }
 ```
 ### Uso en el un controlador
-```
+```php
 use Illuminate\Support\Facades\Gate;
 //...
     // Dentro de un método usar el Gate para verificar el acceso.
@@ -506,7 +506,7 @@ use Illuminate\Support\Facades\Gate;
     Gate::authorize('view-profile');
 ```
 ### Uso en las rutas
-```
+```php
 // routes\web.php
 //...
 Route::get('/profile', [ProfileController::class, 'index'])
@@ -532,7 +532,7 @@ Route::get('/profile', [ProfileController::class, 'index'])
 El término Middleware (Software Intermediario o de Capa Intermedia) se refiere a una capa de software que se sitúa entre la petición (Request) del usuario y la lógica de la aplicación (tus controladores).
 
 ### Definición
-```
+```php
     // app\Http\Middleware\EnsureAgeIsOverEighteen.php
     //...
     public function handle(Request $request, Closure $next): Response
@@ -553,7 +553,7 @@ El término Middleware (Software Intermediario o de Capa Intermedia) se refiere 
 ```
 
 ### Uso en las rutas
-```
+```php
 // routes\web.php
 Route::post('/login', [LoginController::class, 'authenticate'])
         ->middleware(EnsureAgeIsOverEighteen::class) // Usamos el middleware
@@ -561,6 +561,40 @@ Route::post('/login', [LoginController::class, 'authenticate'])
 ```
 
 [middleware-basic](https://github.com/martiniher/laravel-12/tree/middleware-basico)
+
+### Avanzado
+Los Grupos de Middleware son colecciones o stacks de Middlewares que se agrupan bajo un mismo nombre. Su propósito principal es simplificar la aplicación de múltiples filtros a una gran cantidad de rutas de una sola vez. Laravel define dos grupos principales por defecto, basados en el tipo de aplicación que se está construyendo: (web, api)
+
+Esta sintaxis permite al desarrollador inyectar Middlewares personalizados de manera muy específica:
+- Grupo web: Se dirige al grupo de Middlewares que se aplica a todas las rutas web (donde se incluyen por defecto funciones como sesiones, CSRF, etc.).
+- append: La opción append indica que el Middleware personalizado debe ser añadido al final de la lista de Middlewares ya existentes en ese grupo.
+
+Inyección de Lógica: En este ejemplo, el Middleware \App\Http\Middleware\SetLocale::class se está insertando en todas las peticiones web. Este Middleware se encargaría típicamente de detectar la preferencia de idioma del usuario y configurarla para el resto de la aplicación, asegurando que todas las vistas y respuestas se presenten en el idioma correcto.
+
+```php
+    // bootstrap\app.php
+    //...
+    ->withMiddleware(function (Middleware $middleware): void {
+        //
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class, 
+        ]);
+    })
+    //...
+```
+```
+    public function handle(Request $request, Closure $next): Response
+    {
+        // INI - Lógica del middlewere 
+        // Establece la 'locale' (idioma) de la aplicación.
+        // 1. Usa el valor de la sesión ('locale').
+        // 2. Si no hay sesión, usa el valor por defecto de 'config/app.php'.
+        app()->setLocale(session('locale', config('app.locale')));
+        // FIN - Lógica del middleware
+
+        return $next($request);
+    }
+```
 
 ---
 
