@@ -474,9 +474,52 @@ Inversa
 
 [auth-basica](https://github.com/martiniher/laravel-12/tree/auth-basica)
 
+---
 # Autorización
-
 ## gate-basica
+
+```php
+// app\Providers\AppServiceProvider.php
+
+use Illuminate\Support\Facades\Gate;
+
+public function boot(): void
+{
+    // ...
+    // Define un Gate llamado 'view-profile'
+    Gate::define('view-profile', function ($user) {
+        // En este caso simple, solo verifica si el usuario existe (está logueado).
+        // En casos reales, podrías poner lógica más compleja aquí (ej: $user->isAdmin).
+        return (bool) $user;
+    });
+}
+```
+En el controlador
+```
+use Illuminate\Support\Facades\Gate;
+//...
+    // Dentro de un método usar el Gate para verificar el acceso.
+    // Si el Gate 'view-profile' devuelve false, lanzará un error 403 (Unauthorized).
+    Gate::authorize('view-profile');
+```
+En las rutas
+```
+// routes\web.php
+//...
+Route::get('/profile', [ProfileController::class, 'index'])
+    ->middleware('can:view-profile') // Si queremos usar el gate en un middleware
+    ->name('profile.index');
+```
+En blade
+```html
+    <!-- ... -->
+    @can('view-profile')
+        <p>Cargar la información del usuario.</p>
+    @else
+        <p>GATE BLOCK EN LA VIEW: No se ha podido cargar la información del usuario.</p>
+    @endcan
+```
+
 
 [gate-basica](https://github.com/martiniher/laravel-12/tree/gate-basica)
 
