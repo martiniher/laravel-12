@@ -655,5 +655,14 @@ Inyección de Lógica: En este ejemplo, el Middleware \App\Http\Middleware\SetLo
     ]);
 ```
 
+# Tinker
+Laravel Tinker es una herramienta de línea de comandos que proporciona una consola interactiva (REPL) para tu aplicación Laravel.
 
+```bash
+php artisan tinker
+```
+Ejemplo:
+```php
+Hash::make('12345678');
+```
 
