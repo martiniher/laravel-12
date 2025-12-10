@@ -475,6 +475,7 @@ Inversa
 [auth-basica](https://github.com/martiniher/laravel-12/tree/auth-basica)
 
 ---
+
 # Autorización
 ## Gates
 
@@ -523,9 +524,9 @@ Route::get('/profile', [ProfileController::class, 'index'])
     @endcan
 ```
 
-
 [gate-basica](https://github.com/martiniher/laravel-12/tree/gate-basica)
 
+---
 
 # Middleware
 
@@ -654,6 +655,8 @@ Inyección de Lógica: En este ejemplo, el Middleware \App\Http\Middleware\SetLo
         'terminos_aceptados' => ['required', 'boolean', 'same:1'], // Debe ser 1/true
     ]);
 ```
+
+---
 
 # Tinker
 Laravel Tinker es una herramienta de línea de comandos que proporciona una consola interactiva (REPL) para tu aplicación Laravel.
