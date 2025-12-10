@@ -468,10 +468,64 @@ Inversa
 
 [Rama](https://github.com/martiniher/laravel-12/tree/one-to-many)
 
-# Autenticación
+---
 
+# Autenticación
 ## auth-basica
 
+### Validación en el controlador
+```php
+use Illuminate\Support\Facades\Auth;
+
+    //...
+    public function authenticate(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('dashboard');
+        }
+ 
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+//...
+```
+### Uso del Facade Auth 
+```php
+    // Verificar si el usuario está logeado
+    if (Auth::check()) {
+        // Recupera al usuario autenticado
+        $user = Auth::user();
+    }
+
+    // Cierra la sesión del usuario
+    Auth::logout();
+```
+### Control de acceso en rutas usando un middleware
+```php
+// routes/web.php
+
+Route::get('/perfil', [TuControlador::class, 'miMetodo'])->middleware('auth');
+```
+### Control de acceso en Blade: Directivas @auth y @guest
+```php
+@auth
+    {{-- Contenido para usuarios logeados --}}
+    <p>Tienes {{ Auth::user()->posts->count() }} publicaciones.</p>
+@endauth
+
+@guest
+    {{-- Contenido para usuarios invitados --}}
+    <p>Regístrate para crear publicaciones.</p>
+@endguest
+```
 [auth-basica](https://github.com/martiniher/laravel-12/tree/auth-basica)
 
 ---
