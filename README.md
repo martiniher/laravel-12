@@ -531,6 +531,10 @@ Route::get('/profile', [ProfileController::class, 'index'])
 
 El término Middleware (Software Intermediario o de Capa Intermedia) se refiere a una capa de software que se sitúa entre la petición (Request) del usuario y la lógica de la aplicación (tus controladores).
 
+```bash
+php artisan make:middleware EnsureAgeIsOverEighteen
+```
+
 ### Definición
 ```php
     // app\Http\Middleware\EnsureAgeIsOverEighteen.php
@@ -582,7 +586,8 @@ Inyección de Lógica: En este ejemplo, el Middleware \App\Http\Middleware\SetLo
     })
     //...
 ```
-```
+```php
+    // app\Http\Middleware\SetLocale.php
     public function handle(Request $request, Closure $next): Response
     {
         // INI - Lógica del middlewere 
