@@ -509,18 +509,18 @@ Inversa
 - `between:min,max` El valor debe estar entre el mínimo y el máximo. `'puntuacion' => 'between:1,10'`
 
 ## Relaciones
-`unique:table,column` El valor debe ser único en la tabla especificada. `'email' => 'unique:users'`
-`exists:table,column` El valor debe existir en la tabla especificada (clave foránea). `'categoria_id' => 'exists:categories,id'`
+- `unique:table,column` El valor debe ser único en la tabla especificada. `'email' => 'unique:users'`
+- `exists:table,column` El valor debe existir en la tabla especificada (clave foránea). `'categoria_id' => 'exists:categories,id'`
 
 ## Comparación
-`confirmed` Requiere un campo coincidente llamado `[campo]_confirmation`. `'password' => 'confirmed'`
-`same:field` Debe coincidir con el valor de otro campo. `'terminos' => 'same:aceptado'`
+- `confirmed` Requiere un campo coincidente llamado `[campo]_confirmation`. `'password' => 'confirmed'`
+- `same:field` Debe coincidir con el valor de otro campo. `'terminos' => 'same:aceptado'`
 
 ## Archivos
-`file` Debe ser un archivo cargado. `'documento' => 'file'`
-`image` Debe ser un archivo de imagen válido. `'foto_perfil' => 'image'`
-`mimes:types` La extensión del archivo debe coincidir con la lista. `'doc' => 'mimes:pdf,docx'`
-`max:kilobytes` El tamaño máximo del archivo en kilobytes (KB). `'doc' => 'max:2048'`
+- `file` Debe ser un archivo cargado. `'documento' => 'file'`
+- `image` Debe ser un archivo de imagen válido. `'foto_perfil' => 'image'`
+- `mimes:types` La extensión del archivo debe coincidir con la lista. `'doc' => 'mimes:pdf,docx'`
+- `max:kilobytes` El tamaño máximo del archivo en kilobytes (KB). `'doc' => 'max:2048'`
 
 ```php
     $validated = $request->validate([
