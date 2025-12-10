@@ -476,8 +476,11 @@ Inversa
 
 ---
 # Autorización
-## gate-basica
+## Gates
 
+Los Gates (Compuertas o Puertas) son el mecanismo más básico y directo que ofrece Laravel para implementar la autorización de usuarios. Su función principal es determinar si un usuario autenticado tiene permiso para realizar una acción específica.
+
+### Definición
 ```php
 // app\Providers\AppServiceProvider.php
 
@@ -494,7 +497,7 @@ public function boot(): void
     });
 }
 ```
-En el controlador
+### Uso en el un controlador
 ```
 use Illuminate\Support\Facades\Gate;
 //...
@@ -502,7 +505,7 @@ use Illuminate\Support\Facades\Gate;
     // Si el Gate 'view-profile' devuelve false, lanzará un error 403 (Unauthorized).
     Gate::authorize('view-profile');
 ```
-En las rutas
+### Uso en las rutas
 ```
 // routes\web.php
 //...
@@ -510,7 +513,7 @@ Route::get('/profile', [ProfileController::class, 'index'])
     ->middleware('can:view-profile') // Si queremos usar el gate en un middleware
     ->name('profile.index');
 ```
-En blade
+### Uso en una plantilla Blade
 ```html
     <!-- ... -->
     @can('view-profile')
