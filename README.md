@@ -487,8 +487,59 @@ Inversa
 
 [middleware-basic](https://github.com/martiniher/laravel-12/tree/middleware-basico)
 
+---
 
+# Reglas de validación comunes en Laravel
 
+## Presencia
+- `required` El campo debe existir y no estar vacío. `'nombre' => 'required'`
+- `nullable` El campo es opcional, puede ser `null`. `'segundo_nombre' => 'nullable'`
+
+## Tipo
+- `string` El campo debe ser una cadena de texto. `'titulo' => 'string'`
+- `integer` El campo debe ser un número entero. `'edad' => 'integer'`
+- `numeric` El campo debe ser un valor numérico (incluye decimales). `'precio' => 'numeric'`
+- `boolean` El campo debe ser booleano (`true`/`false`, `1`/`0`). `'activo' => 'boolean'`
+- `email` Debe tener un formato de correo electrónico válido. `'email' => 'email'`
+- `date` Debe ser una fecha válida. `'fecha_inicio' => 'date'`
+
+## Tamaño/Rango
+- `min:value` Valor mínimo (longitud para cadenas/archivos, magnitud para números). `'password' => 'min:8'`
+- `max:value` Valor máximo (longitud para cadenas/archivos, magnitud para números). `'descripcion' => 'max:500'`
+- `between:min,max` El valor debe estar entre el mínimo y el máximo. `'puntuacion' => 'between:1,10'`
+
+## Relaciones
+`unique:table,column` El valor debe ser único en la tabla especificada. `'email' => 'unique:users'`
+`exists:table,column` El valor debe existir en la tabla especificada (clave foránea). `'categoria_id' => 'exists:categories,id'`
+
+## Comparación
+`confirmed` Requiere un campo coincidente llamado `[campo]_confirmation`. `'password' => 'confirmed'`
+`same:field` Debe coincidir con el valor de otro campo. `'terminos' => 'same:aceptado'`
+
+## Archivos
+`file` Debe ser un archivo cargado. `'documento' => 'file'`
+`image` Debe ser un archivo de imagen válido. `'foto_perfil' => 'image'`
+`mimes:types` La extensión del archivo debe coincidir con la lista. `'doc' => 'mimes:pdf,docx'`
+`max:kilobytes` El tamaño máximo del archivo en kilobytes (KB). `'doc' => 'max:2048'`
+
+```php
+    $validated = $request->validate([
+        // Presencia y Tipo
+        'nombre' => ['required', 'string', 'max:255'],
+        // Tipo y Unicidad (Relación)
+        'email' => ['required', 'email', 'unique:users,email'], 
+        // Tamaño (Mínimo) y Comparación (Confirmación)
+        'password' => ['required', 'min:8', 'confirmed'],
+        // Tipo, Rango y Opcionalidad
+        'edad' => ['nullable', 'integer', 'between:18,99'],
+        // Relación (Existencia)
+        'categoria_id' => ['required', 'exists:categorias,id'],
+        // Archivos (Imagen, Tipo MIME y Tamaño)
+        'foto_perfil' => ['nullable', 'image', 'mimes:jpeg,png', 'max:2048'], // máx 2MB
+        // Tipo Booleano
+        'terminos_aceptados' => ['required', 'boolean', 'same:1'], // Debe ser 1/true
+    ]);
+```
 
 
 
