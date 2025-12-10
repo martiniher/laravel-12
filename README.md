@@ -529,7 +529,36 @@ Route::get('/profile', [ProfileController::class, 'index'])
 
 # Middleware
 
-## middleware-basic
+El término Middleware (Software Intermediario o de Capa Intermedia) se refiere a una capa de software que se sitúa entre la petición (Request) del usuario y la lógica de la aplicación (tus controladores).
+
+### Definición
+```
+    // app\Http\Middleware\EnsureAgeIsOverEighteen.php
+    //...
+    public function handle(Request $request, Closure $next): Response
+    {
+        // INI - Lógica del middlewere 
+        // Supongamos que la edad viene en la URL como parámetro de consulta (?age=...)
+        if ($request->age < 18) {
+            // Si la edad es menor de 18, lo redirigimos a la página de inicio
+            // con un mensaje de error.
+            return redirect('/')->with('error', 'Debes ser mayor de 18 años para acceder aquí.');
+        }
+        // FIN - Lógica del middleware
+
+        // Si la comprobación pasa, permitimos que la petición continúe
+        // hacia el controlador o el siguiente middleware en la cadena.
+        return $next($request);
+    }
+```
+
+### Uso en las rutas
+```
+// routes\web.php
+Route::post('/login', [LoginController::class, 'authenticate'])
+        ->middleware(EnsureAgeIsOverEighteen::class) // Usamos el middleware
+        ->name('login.authenticate');
+```
 
 [middleware-basic](https://github.com/martiniher/laravel-12/tree/middleware-basico)
 
