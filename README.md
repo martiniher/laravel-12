@@ -720,6 +720,117 @@ Inyección de Lógica: En este ejemplo, el Middleware \App\Http\Middleware\SetLo
 
 ---
 
+# Migraciones
+### Identificación	
+`$table->id()` Crea la clave primaria auto-incremental (BIGINT UNSIGNED); puedes pasar el nombre de la columna:
+```php
+$table->id('id_empleado');
+```
+
+### Texto/Cadenas
+String es VARCHAR (requiere longitud); Text es para texto largo; usa ->unique() para valores no repetidos y ->nullable() si es opcional.
+
+- `string()` Almacena una cadena de longitud fija o variable. Requiere una longitud máxima. Equivale a VARCHAR(100) en MySQL.
+```php
+$table->string('titulo', 100);
+``` 
+- `text()` Para texto de longitud media a larga (hasta 65,535 caracteres). Útil para el cuerpo de un artículo o una descripción detallada. Equivale a TEXT. 
+```php
+$table->text('descripcion');
+```
+
+- `char()` Almacena una cadena de longitud fija. Si almacenas "ES", ocupará 3 caracteres y se rellenará con espacios. Equivale a CHAR(3)
+```php
+$table->char('codigo_pais', 3);
+```
+
+- `mediumText()` Para texto largo, más que TEXT (hasta 16,777,215 caracteres). Útil para contenido generado por usuarios. Equivale a MEDIUMTEXT.
+```php
+$table->mediumText('contenido_post');
+```
+
+- `longText()` Para texto muy largo, el más grande (hasta 4,294,967,295 caracteres o 4GB). Equivale a LONGTEXT
+```php
+$table->longText('datos_json_gigantes');
+```
+
+### Números Enteros
+Permiten números sin decimales; tiny para números muy pequeños, big para IDs de claves foráneas ($table->foreignId()) o valores muy grandes; usa ->default(0) para valor inicial.
+
+- `tinyInteger()` Banderas booleanas (0=No, 1=Sí), estados simples.
+```php 
+$table->tinyInteger('activo')->default(0);
+```
+
+- `integer()` La elección por defecto para recuentos o valores numéricos estándar. 
+```php
+$table->integer('votos')->default(0);
+```
+
+- `bigInteger()` Valores numéricos muy grandes, o si necesitas un ID primario muy grande. 
+```php
+$table->bigInteger('transacciones_totales');
+```
+
+- `foreignId()` Para definir una clave foránea que apunta a un ID 
+```php
+$table->foreignId('user_id');
+```
+
+### Decimales/Moneda
+Almacenan números con coma flotante o precisión fija; $table->decimal('precio', 8, 2) acepta 8 dígitos en total, 2 después del punto.
+- `$table->float()` Se utiliza para almacenar números de coma flotante de precisión simple.
+```php
+$table->float('price');
+```
+- `$table->double()` Se utiliza para almacenar números de coma flotante de precisión doble, ofreciendo más exactitud que float().
+```php
+$table->double('amount');
+```
+- `$table->decimal()` Se utiliza para almacenar números de precisión fija, ideales para datos monetarios o financieros donde la exactitud es crítica. Acepta opcionalmente los parámetros precision (dígitos totales) y scale (dígitos después del punto decimal).
+```php
+$table->decimal('total', 8, 2); // 8 dígitos en total, 2 decimales
+```
+
+### Booleanos
+Almacena true o false (se traduce a TINYINT(1) en SQL); ideal para indicadores como es_activo.
+- `$table->boolean()` Para definir una columna que almacena valores de verdadero (true) o falso (false)
+```php
+$table->boolean('is_active')
+```
+
+### Fechas/Hora
+Almacenan fechas, horas o ambos; $table->date() guarda solo la fecha (YYYY-MM-DD); $table->dateTime() guarda fecha y hora completa.
+- `$table->date()` Almacena solo la fecha (ej: YYYY-MM-DD).
+```php
+$table->date('birth_date');
+```
+- `$table->time()` Almacena solo la hora (ej: HH:MM:SS).
+```php
+$table->time('start_time');
+```
+- `$table->dateTime()` Almacena la fecha y hora combinadas (ej: YYYY-MM-DD HH:MM:SS).
+```php
+$table->dateTime('scheduled_at');
+```
+- `$table->year()` Almacena el año en formato de 4 dígitos.
+```php
+$table->year('publication_year');
+```
+
+### Marcas de Tiempo
+Timestamps agrega created_at y updated_at; softDeletes agrega deleted_at para el borrado lógico de registros.
+- `$table->timestamps()` Crea automáticamente dos columnas: created_at y updated_at. Laravel gestiona estas columnas para registrar cuándo se crea y cuándo se actualiza un registro por última vez.
+```php
+$table->timestamps();
+```
+- `$table->softDeletes()` Crea la columna deleted_at. Permite realizar un "borrado suave" (soft delete), marcando el registro como eliminado con una marca de tiempo en lugar de eliminarlo permanentemente de la base de datos.
+```php
+$table->softDeletes();
+```
+
+---
+
 # Tinker
 Laravel Tinker es una herramienta de línea de comandos que proporciona una consola interactiva (REPL) para tu aplicación Laravel.
 
