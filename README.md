@@ -361,6 +361,8 @@ En resumen, un seeder es la herramienta que llena las tablas vacías con informa
   
 [Puesta en marcha del proyecto usando git](https://youtu.be/YNecIEK3utM)
 
+---
+
 # Las relaciones en Eloquent ORM
 
 [https://laravel.com/docs/12.x/eloquent-relationships](https://laravel.com/docs/12.x/eloquent-relationships)
