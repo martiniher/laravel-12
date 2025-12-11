@@ -471,7 +471,8 @@ Inversa
 ---
 
 # Autenticación
-## auth-basica
+
+El sistema de autenticación te permite verificar la identidad del usuario y gestionar su sesión de manera eficiente.
 
 ### Validación en el controlador
 ```php
