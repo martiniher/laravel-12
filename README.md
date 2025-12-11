@@ -487,7 +487,6 @@ use Illuminate\Support\Facades\Auth;
         ]);
  
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
  
             return redirect()->intended('dashboard');
         }
@@ -560,6 +559,12 @@ use Illuminate\Support\Facades\Gate;
     // Dentro de un método usar el Gate para verificar el acceso.
     // Si el Gate 'view-profile' devuelve false, lanzará un error 403 (Unauthorized).
     Gate::authorize('view-profile');
+
+    //Otra opcion
+    if (Gate::allows('view-profile')) {
+            // El usuario autenticado SÍ puede ver el perfil.
+            return view('profile.show');
+    }
 ```
 ### Uso en las rutas
 ```php
