@@ -110,7 +110,7 @@ class ExampleController extends Controller
 }
 ```
 
-En la enrutamos la petición al controlador.
+Enrutamos la petición al controlador.
 ```php
 // routes\web.php
 use Illuminate\Support\Facades\Route;
