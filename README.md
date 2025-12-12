@@ -1,844 +1,122 @@
-# Desarrollo Web con Frameworks
+# Servicios
 
-## ¿Qué es un Framework?
-
-Un **framework** (marco de trabajo) es una estructura de código predefinida y un conjunto de herramientas que proporcionan la estructura fundamental y las reglas para construir una aplicación.
-
----
-
-## ¿Para qué sirve?
-
-Su propósito principal es aumentar la **productividad** y la **estandarización** del desarrollo:
-
-* **Velocidad**: Evita que tengas que escribir código repetitivo (como la gestión de sesiones, rutas o la conexión a bases de datos) desde cero.
-* **Organización**: Impone un patrón de diseño (como **MVC - Modelo, Vista, Controlador**) que ayuda a mantener el código limpio y escalable.
-* **Seguridad**: Incluye mecanismos de seguridad ya probados contra ataques comunes (como **SQL Injection** o **XSS**).
-* **Comunidad**: Permite que varios desarrolladores trabajen en el mismo proyecto con una convención y un conjunto de herramientas compartidas.
-
----
-
-## ¿Qué diferencias tiene con una Librería?
-
-La principal diferencia radica en quién tiene el **control del flujo** del programa:
-
-| Característica | Framework | Librería |
-| :------------- | :--------------: | :------------- |
-| **Control del Flujo**| **Inversión de Control (IoC)**: El framework define la estructura y el ciclo de vida de la aplicación. | **Control del Desarrollador**: El código del desarrollador dirige el flujo de la aplicación. |
-| **Arquitectura** | Proporciona la **estructura completa** del proyecto (el esqueleto). | Proporciona **funcionalidades específicas** y auxiliares. |
-| **Alcance** | Se utiliza para construir **toda** la aplicación (ej. backend o frontend). | Se utiliza para una **tarea específica** (ej. manipular fechas, hacer peticiones HTTP).|
-| **Ejemplos** | Laravel, Symfony, Django, Angular. | jQuery, Lodash, Moment.js, Guzzle (en PHP). |
-
----
-
-## ¿Cuáles son los principales Frameworks de Desarrollo Web?
-
-Los frameworks de desarrollo web se dividen principalmente en **Backend** (lógica del servidor) y **Frontend** (interfaz de usuario).
-
-### Frameworks de Backend (Servidor)
-
-Estos manejan la lógica, bases de datos y seguridad:
-
-| Lenguaje | Framework Principal | Énfasis / Característica Destacada |
-| :------- | :------------------ | :--------------------------------- |
-| PHP      | **Laravel** | Sintaxis elegante, excelente comunidad, desarrollo rápido (el más popular en PHP). |
-| PHP      | **Symfony** | Componentes reutilizables, robusto, alta calidad de código (base de muchos otros frameworks). |
-| Python   | **Django** | Enfocado en el desarrollo rápido y seguro. |
-
-### Frameworks/Librerías de Frontend (Cliente)
-
-Estos se centran en la interfaz de usuario, interactividad y la experiencia del usuario:
-
-| Lenguaje | Framework | Énfasis / Característica Destacada |
-| :------- | :----------------- | :--------------------------------- |
-| TypeScript| **Angular** | Mantenido por Google. Framework completo y robusto para grandes aplicaciones empresariales. |
-| JavaScript| **Vue.js** | Progresivo y fácil de aprender. Combina lo mejor de React y Angular, muy flexible. |
-| JavaScript| **Next.js** | Framework Full-Stack (Frontend y Backend) construido sobre React. Excelente para **SEO** (Server-Side Rendering). |
-
----
-
-## ¿Qué es Laravel?
-
-**Laravel** es un framework de desarrollo web de código abierto escrito en **PHP**. Fue creado por Taylor Otwell y lanzado por primera vez en 2011. Su objetivo principal es hacer que el desarrollo de aplicaciones web complejas sea más **rápido, fácil y agradable** para el desarrollador.
-
-Laravel sigue el patrón de diseño **Modelo-Vista-Controlador (MVC)**, lo que ayuda a organizar la aplicación de manera lógica y modular.
-
-### ¿Por qué usar Laravel?
-
-Laravel se ha convertido en el framework de PHP más utilizado debido a la forma en que simplifica tareas comunes y promueve la calidad del código:
-
-1. Sintaxis Elegante y Legible: Su código está diseñado para ser expresivo y fácil de entender. Esto reduce la curva de aprendizaje y acelera el desarrollo.
-2. Productividad Rápida ("Time-to-Market"): Incluye herramientas integradas para tareas comunes, lo que elimina la necesidad de escribir código repetitivo:
-    - Eloquent ORM: Una capa de abstracción de bases de datos que permite interactuar con la base de datos usando sintaxis de PHP (Modelos), en lugar de SQL puro.
-    - Sistema de Rutas y Resource Controllers: Facilita la implementación de la arquitectura RESTful (como vimos con store, update, destroy).
-    - Artisan: Una potente interfaz de línea de comandos (CLI) que permite generar código, manejar migraciones de bases de datos, y ejecutar tareas.
-3. Seguridad Integrada: Laravel maneja automáticamente muchas amenazas comunes, proporcionando protección contra ataques como:
-    -  Falsificación de Solicitudes entre Sitios (CSRF).
-    - Inyección SQL.
-    - Scripts entre Sitios (XSS).
-4. Ecosistema y Comunidad: Cuenta con un ecosistema robusto (Laravel Forge, Vapor, Nova) y una comunidad muy activa que proporciona documentación, tutoriales y librerías adicionales (gestionadas a través de Composer).
-
-En resumen, si quieres construir una aplicación web moderna, escalable y segura utilizando PHP, Laravel proporciona el equilibrio perfecto entre simplicidad, funcionalidad y estándares.
-
----
-
-## ¿Qué es Composer?
-
-Composer no es un gestor de paquetes en el sentido tradicional (como apt o yum) sino un **gestor de dependencias**. Esto significa que:
-
-1. **Define Dependencias**: Lee el archivo composer.json de tu proyecto (donde listas qué librerías necesitas).
-2. **Resuelve Dependencias**: Averigua qué otras librerías requiere cada una de las que pediste (dependencias transitivas).
-3. **Descarga Librerías**: Descarga estas librerías (paquetes) del repositorio Packagist.org y las coloca en una carpeta llamada vendor/.
-4. **Autocarga (Autoloading)**: Genera el archivo vendor/autoload.php que cumple con el estándar PSR-4, permitiendo que las clases de todas las librerías descargadas estén disponibles automáticamente en tu código sin usar sentencias require o include.
-
-### ¿Por qué es esencial en Laravel?
-
-Laravel es un framework moderno que está construido sobre la filosofía de reutilizar componentes y seguir los estándares de PHP. Composer es fundamental para esta arquitectura por varias razones:
-
-- **Instalación del Framework**: Laravel en sí mismo es un conjunto de paquetes de Composer. Sin Composer, no podrías instalar ni inicializar un proyecto de Laravel.
-- **Gestión de Dependencias**: Laravel depende de docenas de componentes de terceros (muchos de Symfony) para funcionalidades esenciales, como el enrutamiento, las peticiones HTTP, la consola Artisan, y la capa de base de datos (Eloquent). Composer gestiona estas dependencias por ti.
-- **Facilita el Desarrollo**: Te permite añadir rápidamente funcionalidad a tu proyecto, como un sistema de autenticación (ej. Laravel Breeze o Sanctum), una herramienta de depuración, o integraciones con servicios externos, simplemente listándolas en composer.json.
-- **Estándares PSR**: Composer es el motor que implementa los estándares de autocarga PSR-4 para todos los archivos de tu proyecto y los de las librerías, lo que mantiene el código organizado y estandarizado.
-
----
-
-## ¿Qué son los estándares PSR?
-
-Los estándares PSR (PHP Standards Recommendation) son un conjunto de estándares y directrices propuestos por el grupo PHP Framework Interop Group (PHP-FIG). Su objetivo es asegurar la interoperabilidad entre diferentes frameworks y librerías de PHP, facilitando que el código sea consistente y reutilizable.
-
-Laravel sigue un conjunto estricto de convenciones de nomenclatura basadas en los estándares de PHP (PSR) y el patrón MVC (Modelo-Vista-Controlador) para garantizar la coherencia y la legibilidad.
-
-Estas convenciones no son obligatorias, pero seguirlas facilita enormemente el uso de las características mágicas de Laravel (como Eloquent) y hace que tu código sea instantáneamente legible por cualquier desarrollador de Laravel.
-
-### Convenciones de Nomenclatura en Laravel
-
-#### 1. Clases (Modelos, Controladores, Servicios)
-
-Las clases siguen la convención PascalCase (o UpperCamelCase) y generalmente deben ser singulares para los Modelos y plurales o descriptivas para otros:
-
-- Modelos: Singular y PascalCase.
-    - Ejemplo: User, Product, PostTag.
-- Controladores: PascalCase, generalmente terminan en Controller.
-    - Ejemplo: UserController, OrderController, Api\ProductController.
-- Interfaces/Traits/Abstracts: PascalCase, con prefijos o sufijos descriptivos.
-    - Ejemplo: Authenticatable, CanBeVoted.
-
-
-#### 2. Funciones y Métodos
-
-Los métodos y funciones dentro de las clases siguen la convención camelCase:
-
-- Métodos del Controlador: Tienen nombres que describen la acción (especialmente en los Resource Controllers).
-    - Ejemplo: index(), store(), update(), show().
-- Métodos de Clases:
-    - Ejemplo: getProductName(), calculateTotal(), isPublished().
-- Métodos de Relación en Modelos: Generalmente en camelCase singular para relaciones uno a uno o uno a muchos, y plural para relaciones muchos a muchos.
-    - Ejemplo (Usuario): hasOne('Post') se llama post().
-    - Ejemplo (Post): belongsToMany('Tag') se llama tags().
-
-#### 3. Archivos y Directorios
-
-Laravel organiza los archivos para reflejar el espacio de nombres de la clase y sigue el estándar PSR-4:
-
-- Archivos de Clases: El nombre del archivo debe coincidir exactamente con el nombre de la clase, incluyendo mayúsculas.
-    - Ejemplo: La clase ProductController se guarda en el archivo ProductController.php.
-- Vistas (Views): Utilizan snake_case y generalmente terminan en .blade.php.
-    - Ejemplo: user_profile.blade.php, products.index.blade.php.
-- Directorios: Generalmente en PascalCase para directorios que contienen clases (como app/Http/Controllers) o minúsculas para directorios de configuración o vistas.
-
-#### 4. Base de Datos (Tablas y Columnas)
-
-Aunque puedes anularlas, Laravel tiene fuertes convenciones predeterminadas para las bases de datos:
-
-- Nombres de Tablas: snake_case (separado por guiones bajos) y plural.
-    - Ejemplo: users, products, post_tags.
-- Nombres de Modelos: El modelo asociado es la forma singular y PascalCase del nombre de la tabla (ej: la tabla users usa el modelo User).
-- Nombres de Columnas: snake_case singular.
-    - Ejemplo: first_name, is_active, created_at.
-- Claves Foráneas (Foreign Keys): Usan el nombre del modelo singular en snake_case seguido de _id.
-    - Ejemplo: Una clave foránea a la tabla users se llama user_id.
-- Tablas Pivot (Many-to-Many): Combinan los nombres singulares de las dos tablas en orden alfabético y separadas por guion bajo.
-    - Ejemplo: Una tabla pivot entre posts y tags se llama post_tag.
-
----
-
-## Laravel, ¿Por dónde empezar?
-
-Ya sabemos qué es el patrón de diseño MVC (Modelo-Vista-Controlador). Ahora vamos a ver cómo los desarrolladores de Laravel lo han implementado y cómo vamos a tener que **adaptar nuestra aplicación al framework**.
-
-### Entorno de desarrollo local
-
-Para poner en marcha la aplicación y simplificar la explicación, vamos utilizar un entorno de desarrollo integrado [Laragon](https://laragon.org/), que incluye los componentes necesarios:
-
-- PHP (con las extensiones requeridas).
-- Servidor Web (Apache/Nginx).
-- Base de Datos (MySQL/MariaDB).
-- Composer (Gestor de dependencias de PHP).
-
-### Instalación de Laravel
-
-Aunque podríamos instalarlo directamente desde Composer, vamos a usar el instalador de Laravel. Para ello, utilizaremos Composer para instalarlo de forma global, lo cual solo es necesario realizar una única vez en el sistema:
-
-```
-composer global require laravel/installer
-```
-
-Una vez instalado, tendremos la posibilidad de crear nuevos proyectos ejecutando el siguiente comando:
-```
-laravel new laravel-app
-```
-
-[![Instalación Laravel 12](https://img.youtube.com/vi/O6LVDweUMGM/maxresdefault.jpg)](https://www.youtube.com/watch?v=O6LVDweUMGM)
-
-Durante el proceso de instalación tendremos que responder a las siguientes preguntas:
-
-- `Which starter kit would you like to install? [None]`: Pulsamos enter o escribimos `None`. 
-- `Which testing framework do you prefer? [Pest]`: Pulsamos enter o escribimos `Pest`. 
-- `Which database will your application use? [SQLite]:` Escribimos `mysql`. 
-- `Default database updated. Would you like to run the default database migrations? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
-- `Would you like to run npm install and npm run build? (yes/no) [yes]:` Pulsamos enter o escribimos `yes`.
-
-Cabe destacar el último paso, en el que se ejecuta `npm install`. Este comando no instala NPM, sino que usa NPM (Node Package Manager), que es el administrador de paquetes estándar para JavaScript y descargara las dependencias de frontend del proyecto. Aunque Laravel es un framework de backend PHP, estas dependencias son necesarias para herramientas como Vite que se encargan de compilar y optimizar los recursos de frontend (como el JavaScript y CSS).
-
-### Conceptos básicos necesarios
-
-* **Routing**: El sistema de routing se encarga de mapear la URL solicitada por el usuario con la lógica interna de la aplicación. Su función básica/principal es dirigir cada petición a un controlador y un método específicos.
-* **Controllers**: Una vez que un controlador recibe la petición, ejecuta la lógica de negocio necesaria para responder. Para interactuar con la base de datos, utiliza los modelos, y para presentar la respuesta final al usuario, usa las vistas. El controlador actúa como el mediador central del patrón MVC.
-* **Views**: Las vistas contienen la capa de presentación de la aplicación (generalmente código HTML con datos dinámicos) que se mostrará al usuario. Por defecto, Laravel utiliza el motor de plantillas Blade.
-
-### Utilidades de Laravel
-
-Para facilitar el desarrollo, Laravel dispone de diferentes comandos que son accesibles mediante la consola. Para ello, es necesario acceder desde la terminal a la carpeta raíz del proyecto y utilizar el script `artisan`, el cual debe ser precedido por php (ejemplo: `php artisan [comando]`) para que el intérprete sepa que debe ejecutarlo un archivo PHP.
-
-### La carpeta `public`
-La carpeta `public` es el único directorio de tu aplicación Laravel al que se le debe permitir el acceso directo desde la web y esta debería ser la carpeta raiz del servidor web. Para poder acceder sin modificar la configuración basta con añadir la carpeta `public` a la url. Ej: `http://localhost/laravel-12/public/empleado`
-
----
-
-### Practica
-
-Como punto de partida vamos a adaptar un ejemplo visto con anterioridad ([mvc-php-ejemplo](https://github.com/jvadillo/mvc-php-ejemplo)). La estructura de archivos es muy similar aunque con algunas diferencias:
-
-```
-laravel-app/
-├── app/                               # Lógica central (Modelos, Controladores, etc.)
-│   ├── Http/                          # Controladores, Middleware, Peticiones (Requests)
-│   │   ├── Controllers/               # Controladores de la aplicación
-│   │   │   └── EmpleadoController.php # Ejemplo de controlador
-│   ├── Models/                        # Modelos de Eloquent (interacción con la BD)
-│   │   └── Empleado.php               # Ejemplo de modelo
-├── resources/                         # Recursos sin compilar (vistas, assets)
-│   └── views/                         # Plantillas Blade (Vistas)
-│   │   └──  welcome.blade.php         # Ejemplo de plantilla
-├── routes/                            # Definición de ruta
-│   ├── web.php                        # Rutas para la web (HTML)
-├── .env                               # Variables de entorno
-```
-
-- [Ejemplo 01](https://github.com/martiniher/laravel-12/tree/ejemplo-laravel12-01)
-- [Ejemplo 02](https://github.com/martiniher/laravel-12/tree/ejemplo-laravel12-02)
-
----
-
-### Puesta en Marcha del Proyecto usando Git
-Como gestor de versiones estamos usando Git. Para poder comenzar a trabajar con el proyecto, necesitamos tenerlo instalado en nuestro ordenador local.
-
-#### 1. Clonar el Repositorio
-Usando el comando `git clone [URL-del-repositorio]` descargamos una copia completa del proyecto, incluyendo todo su historial, a nuestro equipo.
-
-```bash
-git clone https://github.com/martiniher/laravel-12.git
-```
-Este comando crea una nueva carpeta con el nombre del repositorio y descarga todos los archivos en ella.
-
-#### 2. Entender y Utilizar el Archivo `.gitignore`
-En la carpeta raíz del proyecto encontrarás un archivo llamado `.gitignore`. Este archivo es crucial, ya que contiene una lista de archivos y carpetas que Git debe ignorar y que no se incluirán en el repositorio.
-
-##### Lista de Archivos Ignorados:
-```
-*.log
-.DS_Store
-.env
-.env.backup
-.env.production
-... (y otros archivos y carpetas)
-/vendor
-/node_modules
-...
-```
-
-##### Propósito del `.gitignore`:
-Ocultar datos sensibles: Archivos como `.env` (Environment file) contienen datos confidenciales y de configuración específica del entorno de desarrollo o producción (como contraseñas y tokens de bases de datos o servicios externos). Es fundamental que no se suban al repositorio público.
-
-Excluir dependencias: Carpetas como `/vendor` (para dependencias de PHP gestionadas por Composer) y `/node_modules` (para dependencias de JavaScript/NPM) suelen ser muy grandes. Se ignoran porque pueden reconstruirse automáticamente en cualquier máquina.
-
-Excluir archivos generados: Archivos de cache, logs (`*.log`), archivos temporales (`.DS_Store`, `Thumbs.db`), y los assets compilados (`/public/build`, `/public/hot`) se generan automáticamente.
-
-#### 3. Instalación de Dependencias y Configuración Inicial
-Dado que el archivo .gitignore excluye las carpetas de dependencias (/vendor y /node_modules) y los archivos de configuración sensible (.env), el siguiente paso esencial es reconstruir estos elementos para que la aplicación funcione:
-
-Moverse a la carpeta del proyecto:
-
-```bash
-cd laravel-12
-```
-
-Instalar dependencias de PHP (Composer): Este paso lee el archivo composer.json e instala todos los paquetes necesarios en la carpeta /vendor.
-```bash
-composer install
-```
-Configurar el archivo `.env`:
-
-Copia el archivo de configuración de ejemplo (a menudo llamado `.env.example`) y nómbralo como `.env`.
-Este archivo debe ser editado con tus credenciales de base de datos locales y otras configuraciones específicas de tu entorno.
-```bash
-cp .env.example .env
-```
-
-Cabe destacar del archivo .env los datos de conexión a la base de datos, que son esenciales para que la aplicación sepa dónde y cómo almacenar y recuperar información.
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel_12
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-Generar la Application Key (clave de cifrado): En proyectos Laravel, necesitas generar una clave única para fines de seguridad.
-```bash
-php artisan key:generate
-```
-#### 4. Compilación de Archivos Estáticos (Assets)
-Los archivos de código fuente de CSS y JavaScript (como los que se encuentran en la carpeta resources) no se utilizan directamente en producción, sino que deben ser compilados, transpuestos y minimizados para un rendimiento óptimo en el navegador.
-
-Este proceso generalmente se realiza con Node.js y npm (o yarn / pnpm).
-
-Instalar dependencias de Node.js (NPM):
-
-Primero, debes instalar las dependencias de frontend definidas en el archivo package.json (que incluye el compilador, PostCSS, Babel, etc.).
-```bash
-npm install
-```
-
-Compilar los Assets:
-
-Una vez instaladas las dependencias, ejecutas el comando de compilación. Este comando procesa los archivos fuente y genera los archivos estáticos finales (como `app.css` o `app.js`) dentro de carpetas públicas, a menudo `/public/build` o `/public/js`, que se ignoraron inicialmente en el archivo `.gitignore`.
-
-Para una compilación optimizada para producción, usa:
-```bash
-npm run build
-```
-
-#### 5. Ejecución de las Migraciones de la BBDD
-Una vez que has clonado el repositorio, instalado las dependencias y configurado el archivo `.env` con las credenciales de tu base de datos local, el paso final y crucial es crear la estructura de la base de datos definida en el código.
-
-Esto se realiza mediante el comando migrate de Artisan:
-
-Ejecutar las migraciones: Este comando lee los archivos de migración ubicados en la carpeta `database/migrations` y crea las tablas correspondientes en tu base de datos. Con el parámetro `--seed` insertaremos los datos iniciales en esas tabla.
-
-```bash
-php artisan migrate --seed
-```
-
-Un seeder es un archivo (o clase) que se utiliza para insertar datos iniciales en las tablas de la base de datos.
-Se ejecutan después de las migraciones para:
-- Crear usuarios por defecto (por ejemplo, un administrador).
-- Añadir configuraciones iniciales.
-- Poblar la base de datos con datos de prueba para el desarrollo.
-
-En resumen, un seeder es la herramienta que llena las tablas vacías con información esencial para que la aplicación comience a funcionar.
-
-#### Resumen
-
-- Clonar: `git clone https://github.com/martiniher/laravel-12.git`
-- Moverse: `cd laravel-12`
-- Dependencias PHP: `composer install`
-- Configuración: `cp .env.example .env`
-- Clave: `php artisan key:generate`
-- Dependencias NPM: `npm install`
-- Compilar los Assets `npm run build`
-- Migraciones: `php artisan migrate --seed`
-  
-[Puesta en marcha del proyecto usando git](https://youtu.be/YNecIEK3utM)
-
----
-
-# Las relaciones en Eloquent ORM
-
-[https://laravel.com/docs/12.x/eloquent-relationships](https://laravel.com/docs/12.x/eloquent-relationships)
-
-
-## one-to-one
-
-[Documentación](https://laravel.com/docs/12.x/eloquent-relationships#one-to-one)
-
-Ejemplo:
- - 1 usuario tiene 1 teléfono. 
- - 1 teléfono es de un usuario.
-
-Normal
-```php
-    // app\Models\User.php
-    use Illuminate\Database\Eloquent\Relations\HasOne;
-
-    //...
-    public function phone(): HasOne
-    {
-        return $this->hasOne(Phone::class);
-    }
-```
-
-Inversa
-```php
-    // app\Models\Phone.php
-    use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
-    //...
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-```
-
-[Rama](https://github.com/martiniher/laravel-12/tree/one-to-one)
-
-## many-to-many
-
-[Documentación](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many)
-
-Ejemplo:
- - 1 usuario puede tener N roles. 
- - 1 rol puede estar en N usuarios.
-
-Normal
-```php
-    // app\Models\User.php
-    use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
-    //...
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
-    }
-```
-
-Inversa
-```php
-    // app\Models\Role.php
-    use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
-    //...
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-```
-
-[Rama](https://github.com/martiniher/laravel-12/tree/many-to-many)
-
-## one-to-many
-
-[Documentación](https://laravel.com/docs/12.x/eloquent-relationships#one-to-many)
-
-Ejemplo:
- - 1 publicación puede tener N comentarios. 
- - 1 comentario puede estar en 1 publicación.
-
-Normal
-```php
-    // app\Models\Post.php
-    use Illuminate\Database\Eloquent\Relations\HasMany;
-
-    //...
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
-    }
-```
-
-Inversa
-```php
-    // app\Models\Comment.php
-    use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
-    //...
-    public function post(): BelongsTo
-    {
-        return $this->belongsTo(Post::class);
-    }
-```
-
-[Rama](https://github.com/martiniher/laravel-12/tree/one-to-many)
-
----
-
-# Autenticación
-
-El sistema de autenticación te permite verificar la identidad del usuario y gestionar su sesión de manera eficiente.
-
-### Validación en el controlador
-```php
-use Illuminate\Support\Facades\Auth;
-
-    //...
-    public function authenticate(Request $request): RedirectResponse
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
- 
-        if (Auth::attempt($credentials)) {
- 
-            return redirect()->intended('dashboard');
-        }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
-    }
-//...
-```
-### Uso del Facade Auth 
-```php
-    // Verificar si el usuario está logeado
-    if (Auth::check()) {
-        // Recupera al usuario autenticado
-        $user = Auth::user();
-    }
-
-    // Cierra la sesión del usuario
-    Auth::logout();
-```
-### Control de acceso en rutas usando un middleware
-```php
-// routes/web.php
-
-Route::get('/perfil', [TuControlador::class, 'miMetodo'])->middleware('auth');
-```
-### Control de acceso en Blade: Directivas @auth y @guest
-```php
-@auth
-    {{-- Contenido para usuarios logeados --}}
-    <p>Tienes {{ Auth::user()->posts->count() }} publicaciones.</p>
-@endauth
-
-@guest
-    {{-- Contenido para usuarios invitados --}}
-    <p>Regístrate para crear publicaciones.</p>
-@endguest
-```
-[auth-basica](https://github.com/martiniher/laravel-12/tree/auth-basica)
-
----
-
-# Autorización
-## Gates
-
-Los Gates (Compuertas o Puertas) son el mecanismo más básico y directo que ofrece Laravel para implementar la autorización de usuarios. Su función principal es determinar si un usuario autenticado tiene permiso para realizar una acción específica.
+Los Servicios se utilizan para centralizar y encapsular la lógica de negocio compleja, sacándola de los controladores y modelos. Esto mantiene tu código limpio, fácil de probar (testable) y reutilizable. Para poder utilizar estos Servicios de forma eficiente y desacoplada, se emplea el patrón de Inyección de Dependencias (DI) donde una clase no crea sus dependencias , sino que las recibe (o son "inyectadas") desde una fuente externa. Esto permite un código más flexible, modular y mucho más fácil de probar.
 
 ### Definición
+
 ```php
-// app\Providers\AppServiceProvider.php
+// app\Services\ExampleService.php
 
-use Illuminate\Support\Facades\Gate;
+namespace App\Services;
 
-public function boot(): void
+class ExampleService
 {
-    // ...
-    // Define un Gate llamado 'view-profile'
-    Gate::define('view-profile', function ($user) {
-        // En este caso simple, solo verifica si el usuario existe (está logueado).
-        // En casos reales, podrías poner lógica más compleja aquí (ej: $user->isAdmin).
-        return (bool) $user;
-    });
+    public function checkSuccess(array $data)
+    {
+        // Aquí iría tu lógica:
+
+        return [
+            'status' => 'success',
+            'message' => 'Order processed successfully.',
+            'data' => $data
+        ];
+    }
 }
 ```
-### Uso en el un controlador
-```php
-use Illuminate\Support\Facades\Gate;
-//...
-    // Dentro de un método usar el Gate para verificar el acceso.
-    // Si el Gate 'view-profile' devuelve false, lanzará un error 403 (Unauthorized).
-    Gate::authorize('view-profile');
 
-    //Otra opcion
-    if (Gate::allows('view-profile')) {
-            // El usuario autenticado SÍ puede ver el perfil.
-            return view('profile.show');
+### Uso en un controlador
+
+```php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Services\ExampleService; // Importamos el servicio.
+
+class ExampleController extends Controller
+{
+    
+    // INI - La manera larga de inyectar un servicio.
+    private $exampleService;
+
+    public function __construct(ExampleService $exampleService)
+    {
+        $this->exampleService = $exampleService;
     }
+    // FIN
+
+    public function index(Request $request){
+        $resultado = $this->exampleService->checkSuccess(['prueba' => 'dato de prueba']); //Usamos el servicio
+        dd($resultado);
+    }
+}
 ```
-### Uso en las rutas
+
+Creamos una carpeta y un fichero para el servicio: Ejemplo en la consola de Laragon:
+```bash
+mkdir -p app\Services
+touch app\Services\ExampleService.php
+```
 ```php
-// routes\web.php
-//...
-Route::get('/profile', [ProfileController::class, 'index'])
-    ->middleware('can:view-profile') // Si queremos usar el gate en un middleware
-    ->name('profile.index');
+// app\Services\ExampleService.php
+
+namespace App\Services;
+
+class ExampleService
+{
+    public function checkSuccess(array $data)
+    {
+        // Aquí iría tu lógica:
+
+        return [
+            'status' => 'success',
+            'message' => 'Order processed successfully.',
+            'data' => $data
+        ];
+    }
+}
 ```
-### Uso en una plantilla Blade
-```html
-    <!-- ... -->
-    @can('view-profile')
-        <p>Cargar la información del usuario.</p>
-    @else
-        <p>GATE BLOCK EN LA VIEW: No se ha podido cargar la información del usuario.</p>
-    @endcan
-```
 
-[gate-basica](https://github.com/martiniher/laravel-12/tree/gate-basica)
-
----
-
-# Middleware
-
-El término Middleware (Software Intermediario o de Capa Intermedia) se refiere a una capa de software que se sitúa entre la petición (Request) del usuario y la lógica de la aplicación (tus controladores).
+Creamos el controlador
 
 ```bash
-php artisan make:middleware EnsureAgeIsOverEighteen
-```
+ php artisan make:Controller ExampleController
+ ```
+ ```php
+// app\Http\Controllers\ExampleController.php
 
-### Definición
-```php
-    // app\Http\Middleware\EnsureAgeIsOverEighteen.php
-    //...
-    public function handle(Request $request, Closure $next): Response
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Services\ExampleService; // Importamos el servicio.
+
+class ExampleController extends Controller
+{
+    
+    // INI - La manera larga de inyectar un servicio.
+    private $exampleService;
+
+    public function __construct(ExampleService $exampleService)
     {
-        // INI - Lógica del middlewere 
-        // Supongamos que la edad viene en la URL como parámetro de consulta (?age=...)
-        if ($request->age < 18) {
-            // Si la edad es menor de 18, lo redirigimos a la página de inicio
-            // con un mensaje de error.
-            return redirect('/')->with('error', 'Debes ser mayor de 18 años para acceder aquí.');
-        }
-        // FIN - Lógica del middleware
-
-        // Si la comprobación pasa, permitimos que la petición continúe
-        // hacia el controlador o el siguiente middleware en la cadena.
-        return $next($request);
+        $this->exampleService = $exampleService;
     }
+    // FIN
+
+    public function index(Request $request){
+        $resultado = $this->exampleService->checkSuccess(['prueba' => 'dato de prueba']); //Usamos el servicio
+        dd($resultado);
+    }
+}
 ```
 
-### Uso en las rutas
+En la enrutamos la petición al controlador.
 ```php
 // routes\web.php
-Route::post('/login', [LoginController::class, 'authenticate'])
-        ->middleware(EnsureAgeIsOverEighteen::class) // Usamos el middleware
-        ->name('login.authenticate');
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\ExampleController;
+
+
+Route::get('/', [ExampleController::class, 'index'])->name('index');
 ```
-
-[middleware-basic](https://github.com/martiniher/laravel-12/tree/middleware-basico)
-
-### Avanzado
-Los Grupos de Middleware son colecciones o stacks de Middlewares que se agrupan bajo un mismo nombre. Su propósito principal es simplificar la aplicación de múltiples filtros a una gran cantidad de rutas de una sola vez. Laravel define dos grupos principales por defecto, basados en el tipo de aplicación que se está construyendo: (web, api)
-
-Esta sintaxis permite al desarrollador inyectar Middlewares personalizados de manera muy específica:
-- Grupo web: Se dirige al grupo de Middlewares que se aplica a todas las rutas web (donde se incluyen por defecto funciones como sesiones, CSRF, etc.).
-- append: La opción append indica que el Middleware personalizado debe ser añadido al final de la lista de Middlewares ya existentes en ese grupo.
-
-Inyección de Lógica: En este ejemplo, el Middleware \App\Http\Middleware\SetLocale::class se está insertando en todas las peticiones web. Este Middleware se encargaría típicamente de detectar la preferencia de idioma del usuario y configurarla para el resto de la aplicación, asegurando que todas las vistas y respuestas se presenten en el idioma correcto.
-
-```php
-    // bootstrap\app.php
-    //...
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
-        $middleware->web(append: [
-            \App\Http\Middleware\SetLocale::class, 
-        ]);
-    })
-    //...
-```
-```php
-    // app\Http\Middleware\SetLocale.php
-    public function handle(Request $request, Closure $next): Response
-    {
-        // INI - Lógica del middlewere 
-        // Establece la 'locale' (idioma) de la aplicación.
-        // 1. Usa el valor de la sesión ('locale').
-        // 2. Si no hay sesión, usa el valor por defecto de 'config/app.php'.
-        app()->setLocale(session('locale', config('app.locale')));
-        // FIN - Lógica del middleware
-
-        return $next($request);
-    }
-```
-
----
-
-# Reglas de validación comunes en Laravel
-
-## Presencia
-- `required` El campo debe existir y no estar vacío. `'nombre' => 'required'`
-- `nullable` El campo es opcional, puede ser `null`. `'segundo_nombre' => 'nullable'`
-
-## Tipo
-- `string` El campo debe ser una cadena de texto. `'titulo' => 'string'`
-- `integer` El campo debe ser un número entero. `'edad' => 'integer'`
-- `numeric` El campo debe ser un valor numérico (incluye decimales). `'precio' => 'numeric'`
-- `boolean` El campo debe ser booleano (`true`/`false`, `1`/`0`). `'activo' => 'boolean'`
-- `email` Debe tener un formato de correo electrónico válido. `'email' => 'email'`
-- `date` Debe ser una fecha válida. `'fecha_inicio' => 'date'`
-
-## Tamaño/Rango
-- `min:value` Valor mínimo (longitud para cadenas/archivos, magnitud para números). `'password' => 'min:8'`
-- `max:value` Valor máximo (longitud para cadenas/archivos, magnitud para números). `'descripcion' => 'max:500'`
-- `between:min,max` El valor debe estar entre el mínimo y el máximo. `'puntuacion' => 'between:1,10'`
-
-## Relaciones
-- `unique:table,column` El valor debe ser único en la tabla especificada. `'email' => 'unique:users'`
-- `exists:table,column` El valor debe existir en la tabla especificada (clave foránea). `'categoria_id' => 'exists:categories,id'`
-
-## Comparación
-- `confirmed` Requiere un campo coincidente llamado `[campo]_confirmation`. `'password' => 'confirmed'`
-- `same:field` Debe coincidir con el valor de otro campo. `'terminos' => 'same:aceptado'`
-
-## Archivos
-- `file` Debe ser un archivo cargado. `'documento' => 'file'`
-- `image` Debe ser un archivo de imagen válido. `'foto_perfil' => 'image'`
-- `mimes:types` La extensión del archivo debe coincidir con la lista. `'doc' => 'mimes:pdf,docx'`
-- `max:kilobytes` El tamaño máximo del archivo en kilobytes (KB). `'doc' => 'max:2048'`
-
-```php
-    $validated = $request->validate([
-        // Presencia y Tipo
-        'nombre' => ['required', 'string', 'max:255'],
-        // Tipo y Unicidad (Relación)
-        'email' => ['required', 'email', 'unique:users,email'], 
-        // Tamaño (Mínimo) y Comparación (Confirmación)
-        'password' => ['required', 'min:8', 'confirmed'],
-        // Tipo, Rango y Opcionalidad
-        'edad' => ['nullable', 'integer', 'between:18,99'],
-        // Relación (Existencia)
-        'categoria_id' => ['required', 'exists:categorias,id'],
-        // Archivos (Imagen, Tipo MIME y Tamaño)
-        'foto_perfil' => ['nullable', 'image', 'mimes:jpeg,png', 'max:2048'], // máx 2MB
-        // Tipo Booleano
-        'terminos_aceptados' => ['required', 'boolean', 'same:1'], // Debe ser 1/true
-    ]);
-```
-
----
-
-# Migraciones
-### Identificación	
-`$table->id()` Crea la clave primaria auto-incremental (BIGINT UNSIGNED); puedes pasar el nombre de la columna:
-```php
-$table->id('id_empleado');
-```
-
-### Texto/Cadenas
-String es VARCHAR (requiere longitud); Text es para texto largo; usa ->unique() para valores no repetidos y ->nullable() si es opcional.
-
-- `string()` Almacena una cadena de longitud fija o variable. Requiere una longitud máxima. Equivale a VARCHAR(100) en MySQL.
-```php
-$table->string('titulo', 100);
-``` 
-- `text()` Para texto de longitud media a larga (hasta 65,535 caracteres). Útil para el cuerpo de un artículo o una descripción detallada. Equivale a TEXT. 
-```php
-$table->text('descripcion');
-```
-
-- `char()` Almacena una cadena de longitud fija. Si almacenas "ES", ocupará 3 caracteres y se rellenará con espacios. Equivale a CHAR(3)
-```php
-$table->char('codigo_pais', 3);
-```
-
-- `mediumText()` Para texto largo, más que TEXT (hasta 16,777,215 caracteres). Útil para contenido generado por usuarios. Equivale a MEDIUMTEXT.
-```php
-$table->mediumText('contenido_post');
-```
-
-- `longText()` Para texto muy largo, el más grande (hasta 4,294,967,295 caracteres o 4GB). Equivale a LONGTEXT
-```php
-$table->longText('datos_json_gigantes');
-```
-
-### Números Enteros
-Permiten números sin decimales; tiny para números muy pequeños, big para IDs de claves foráneas ($table->foreignId()) o valores muy grandes; usa ->default(0) para valor inicial.
-
-- `tinyInteger()` Banderas booleanas (0=No, 1=Sí), estados simples.
-```php 
-$table->tinyInteger('activo')->default(0);
-```
-
-- `integer()` La elección por defecto para recuentos o valores numéricos estándar. 
-```php
-$table->integer('votos')->default(0);
-```
-
-- `bigInteger()` Valores numéricos muy grandes, o si necesitas un ID primario muy grande. 
-```php
-$table->bigInteger('transacciones_totales');
-```
-
-- `foreignId()` Para definir una clave foránea que apunta a un ID 
-```php
-$table->foreignId('user_id');
-```
-
-### Decimales/Moneda
-Almacenan números con coma flotante o precisión fija; $table->decimal('precio', 8, 2) acepta 8 dígitos en total, 2 después del punto.
-- `$table->float()` Se utiliza para almacenar números de coma flotante de precisión simple.
-```php
-$table->float('price');
-```
-- `$table->double()` Se utiliza para almacenar números de coma flotante de precisión doble, ofreciendo más exactitud que float().
-```php
-$table->double('amount');
-```
-- `$table->decimal()` Se utiliza para almacenar números de precisión fija, ideales para datos monetarios o financieros donde la exactitud es crítica. Acepta opcionalmente los parámetros precision (dígitos totales) y scale (dígitos después del punto decimal).
-```php
-$table->decimal('total', 8, 2); // 8 dígitos en total, 2 decimales
-```
-
-### Booleanos
-Almacena true o false (se traduce a TINYINT(1) en SQL); ideal para indicadores como es_activo.
-- `$table->boolean()` Para definir una columna que almacena valores de verdadero (true) o falso (false)
-```php
-$table->boolean('is_active')
-```
-
-### Fechas/Hora
-Almacenan fechas, horas o ambos; $table->date() guarda solo la fecha (YYYY-MM-DD); $table->dateTime() guarda fecha y hora completa.
-- `$table->date()` Almacena solo la fecha (ej: YYYY-MM-DD).
-```php
-$table->date('birth_date');
-```
-- `$table->time()` Almacena solo la hora (ej: HH:MM:SS).
-```php
-$table->time('start_time');
-```
-- `$table->dateTime()` Almacena la fecha y hora combinadas (ej: YYYY-MM-DD HH:MM:SS).
-```php
-$table->dateTime('scheduled_at');
-```
-- `$table->year()` Almacena el año en formato de 4 dígitos.
-```php
-$table->year('publication_year');
-```
-
-### Marcas de Tiempo
-Timestamps agrega created_at y updated_at; softDeletes agrega deleted_at para el borrado lógico de registros.
-- `$table->timestamps()` Crea automáticamente dos columnas: created_at y updated_at. Laravel gestiona estas columnas para registrar cuándo se crea y cuándo se actualiza un registro por última vez.
-```php
-$table->timestamps();
-```
-- `$table->softDeletes()` Crea la columna deleted_at. Permite realizar un "borrado suave" (soft delete), marcando el registro como eliminado con una marca de tiempo en lugar de eliminarlo permanentemente de la base de datos.
-```php
-$table->softDeletes();
-```
-
----
-
-# Tinker
-Laravel Tinker es una herramienta de línea de comandos que proporciona una consola interactiva (REPL) para tu aplicación Laravel.
-
-```bash
-php artisan tinker
-```
-Ejemplo:
-```php
-Hash::make('12345678');
-```
-
