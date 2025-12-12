@@ -898,3 +898,22 @@ class ExampleController extends Controller
 }
 ```
 [Rama servicios](https://github.com/martiniher/laravel-12/tree/servicios)
+
+---
+# Facades
+
+### Log
+```php
+use Illuminate\Support\Facades\Log; // ¡Importante!
+
+    //...
+    //dentro de un método
+    Log::debug('Información detallada del flujo para desarrolladores.');
+    Log::info('Eventos rutinarios, como inicio de sesión o creación exitosa.');
+    Log::notice('Condiciones normales pero significativas.');
+    Log::warning('Warning	Algo inesperado, pero la aplicación sigue funcionando.');	
+    Log::error('Fallo en la aplicación que impidió una operación');
+    Log::critical('Error grave que requiere acción inmediata (ej. la base de datos no responde).');
+    Log::alert('Debe notificarse a los administradores.');
+    Log::emergency('El sistema está inutilizable.');
+```
