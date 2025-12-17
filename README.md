@@ -917,3 +917,47 @@ use Illuminate\Support\Facades\Log; // ¡Importante!
     Log::alert('Debe notificarse a los administradores.');
     Log::emergency('El sistema está inutilizable.');
 ```
+---
+# CORS
+
+Los navegadores, por seguridad, bloquean por defecto las peticiones entre dominios diferentes (Cross-Origin). A menos que el servidor autorice explícitamente estas operaciones mediante la configuración de CORS, el navegador impedirá que la solicitud se complete con éxito.
+
+#### Publicar configuración cors
+
+Permite modificar la configuración predeterminada de Laravel que se encuentra en la carpeta `vendor` generando un archivo en `config/cors.php`. Es fundamental usar este comando porque nunca se deben editar los archivos dentro de 'vendor`, ya que cualquier cambio se perdería al actualizar las dependencias con *Composer*.
+
+```bash
+php artisan config:publish cors
+```
+
+#### Archivo de configuración
+
+- `paths`: Define las rutas de tu aplicación (como las de la API) a las que se aplicarán estas reglas de CORS. `paths: ['api/*', 'blog/peticiones']`
+- `allowed_methods`: Especifica los verbos HTTP permitidos (GET, POST, PUT, etc.); el asterisco * permite todos. `allowed_methods: ['GET', 'POST']`
+- `allowed_origins`: Indica qué dominios externos (ej. https://mi-frontend.com) tienen permiso para consumir tu API. `allowed_origins: ['https://mi-tienda.com', 'https://admin.mi-tienda.com']`
+- `allowed_origins_patterns`: Permite definir los dominios autorizados mediante expresiones regulares para una mayor flexibilidad. `allowed_origins_patterns: ['*.midominio.com']`
+- `allowed_headers`: Determina qué cabeceras HTTP específicas (como Content-Type o Authorization) puede enviar el cliente. `allowed_headers: ['Content-Type', 'X-Requested-With']`
+- `exposed_headers`: Define qué cabeceras de la respuesta del servidor son seguras para que el navegador las lea desde el cliente. `exposed_headers: ['X-Custom-Header']`
+- `max_age`: Indica cuánto tiempo (en segundos) el navegador puede guardar en caché el resultado de una petición "preflight". `max_age: 600`
+- `supports_credentials`: Indica si se permite el envío de cookies o cabeceras de autenticación en las peticiones entre sitios. `supports_credentials: true`
+
+
+#### Ejemplo
+
+```php
+// config\cors.php`
+
+return [
+
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'allowed_methods' => ['*'],
+    'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins_patterns' => [],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => true, // Obligatorio para Sanctum/Cookies
+];
+```
+
+En este ejemplo, el servidor permitirá peticiones desde el dominio local `http://localhost:5173` (típico de Vite), pero solo hacia las rutas que comienzan con `api/` o la ruta de autenticación de Sanctum. Al usar `'allowed_methods' => ['*']`, se permite cualquier verbo HTTP (GET, POST, PUT, etc.).
