@@ -961,3 +961,62 @@ return [
 ```
 
 En este ejemplo, el servidor permitirá peticiones desde el dominio local `http://localhost:5173` (típico de Vite), pero solo hacia las rutas que comienzan con `api/` o la ruta de autenticación de Sanctum. Al usar `'allowed_methods' => ['*']`, se permite cualquier verbo HTTP (GET, POST, PUT, etc.).
+
+---
+
+# API
+
+Instalamos lo necesario para la api
+
+```bash
+php artisan install:api
+```
+
+
+
+Ejemplo de rutas
+
+```php
+    // routes\api.php
+
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Route;
+
+    use Illuminate\Support\Facades\Auth;
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
+
+
+    Route::post('/login', function (Request $request) {
+        // 1. Validar las credenciales
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            //'device_name' => 'required', // Para el nombre del token
+        ]);
+
+        // 2. Intentar autenticar al usuario
+        if (! Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'Credenciales inválidas.'
+            ], 401);
+        }
+
+        // 3. Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // 4. Crear el token
+        $token = $user->createToken('device_name')->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user
+        ]);
+    })->name('login');
+
+```
+
+- Peticion a `/api/login` y recoger el token
+- Peticion a `/api/user` con el header de la petición `Authorization: Bearer 15|ky3lJKzSWnODtcmzhpNMQHpt2UeN6kqriKJtwH4Ke7463e6f`
