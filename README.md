@@ -966,15 +966,37 @@ En este ejemplo, el servidor permitirá peticiones desde el dominio local `http:
 
 # API
 
+#### Introducción
+
+Aunque existen diferentes maneras de proteger nuestras APIs, una de las más populares es el uso de tokens en las cabeceras. En este manual, utilizaremos el ecosistema de Laravel junto con Sanctum, una solución ligera y potente.
+
+Este método destaca por ser 'stateless' (sin estado), lo que permite que el servidor no tenga que almacenar sesiones activas, facilitando la escalabilidad de la aplicación y mejorando la seguridad, ya que el token viaja de forma cifrada en cada solicitud.
+
+#### Instalación
+
 Instalamos lo necesario para la api
 
 ```bash
 php artisan install:api
 ```
 
+#### Modelo user
 
+En al modelo *user* añadimos el trait `HasApiTokens` que es un un mecanismo diseñado para la reutilización de código en lenguajes de herencia simple, como PHP
 
-Ejemplo de rutas
+```php
+// app\Models\User.php
+//..
+use Laravel\Sanctum\HasApiTokens; //Importamos el trait.
+//..
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable; //Añadimos en la clase el trait a la lista de importados
+```
+
+#### Ejemplo
+
+Ejemplo simplificado de lógica para APIs. *IMPORTANTE* Este es un ejemplo simplificado. La lógica de validación y autenticación debe implementarse dentro de un controlador.
 
 ```php
     // routes\api.php
@@ -986,15 +1008,13 @@ Ejemplo de rutas
 
     Route::get('/user', function (Request $request) {
         return $request->user();
-    })->middleware('auth:sanctum');
-
+    })->middleware('auth:sanctum'); //Con este middleware protegemos las rutas y solo aceptara peticiones con el header Authorization
 
     Route::post('/login', function (Request $request) {
         // 1. Validar las credenciales
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            //'device_name' => 'required', // Para el nombre del token
         ]);
 
         // 2. Intentar autenticar al usuario
@@ -1004,10 +1024,10 @@ Ejemplo de rutas
             ], 401);
         }
 
-        // 3. Obtener el usuario autenticado
+        // 3. Obtener el modelo del usuario autenticado del Facades Auth
         $user = Auth::user();
 
-        // 4. Crear el token
+        // 4. Crear el token usando el método createToken que añadimos con el trait HasApiTokens 
         $token = $user->createToken('device_name')->plainTextToken;
 
         return response()->json([
@@ -1018,5 +1038,11 @@ Ejemplo de rutas
 
 ```
 
-- Peticion a `/api/login` y recoger el token
-- Peticion a `/api/user` con el header de la petición `Authorization: Bearer 15|ky3lJKzSWnODtcmzhpNMQHpt2UeN6kqriKJtwH4Ke7463e6f`
+- A todas las rutas definidas en `routes/api.php` se les añade automáticamente el prefijo `api/`.
+- Para proteger una ruta y garantizar que sea accesible únicamente mediante un token válido, se debe aplicar el `middleware ->middleware('auth:sanctum')`.
+- Para generar un token, tras validar las credenciales del usuario, se utiliza el método: `$user->createToken('nombreToken')->plainTextToken`.
+
+#### Uso
+- *Obtención del Token*: Se realiza una petición enviando las credenciales al endpoint `/api/login`. Si los datos son correctos, el servidor devolverá un token de acceso.
+- *Autorización de Peticiones*: Una vez obtenido el token, se debe incluir en todas las peticiones a rutas protegidas (por ejemplo, `/api/user`). Esto se hace a través de la cabecera (header) de HTTP llamada `Authorization`.
+- *Formato de la Cabecera*: El token debe ir precedido de la palabra Bearer seguido de un espacio. Ejemplo de cabecera: `Authorization: Bearer 15|ky3lJKzSWnODtcmzhpNMQHpt2UeN6kqriKJtwH4Ke7463e6f`
