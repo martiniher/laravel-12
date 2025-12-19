@@ -917,6 +917,36 @@ use Illuminate\Support\Facades\Log; // ¡Importante!
     Log::alert('Debe notificarse a los administradores.');
     Log::emergency('El sistema está inutilizable.');
 ```
+
+### Auth
+```php
+use Illuminate\Support\Facades\Auth; // ¡Importante!
+
+// --- COMPROBACIÓN ---
+Auth::check();    // Devuelve true si el usuario está autenticado.
+Auth::guest();    // Devuelve true si el usuario NO está autenticado (es invitado).
+
+// --- OBTENCIÓN DE DATOS ---
+$user = Auth::user(); // Obtiene el modelo del usuario actual (instancia de App\Models\User).
+$id = Auth::id();     // Obtiene únicamente el ID del usuario autenticado.
+
+// --- ACCIONES DE AUTENTICACIÓN ---
+// Intenta loguear con credenciales (devuelve true/false).
+Auth::attempt(['email' => $email, 'password' => $password], $remember); 
+
+// Loguea a un usuario específico manualmente.
+Auth::login($user); 
+
+// Loguea a un usuario por su ID.
+Auth::loginUsingId(1); 
+
+// Cierra la sesión del usuario actual.
+Auth::logout();
+
+// --- CASOS ESPECIALES ---
+Auth::once($credentials); // Loguea solo para la petición actual (útil para APIs sin estado).
+Auth::viaRemember();      // Comprueba si el usuario se autenticó mediante la cookie "recordarme".
+```
 ---
 # CORS
 
